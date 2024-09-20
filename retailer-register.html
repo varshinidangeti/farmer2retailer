@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Retailer Registration</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .language-select {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="language-select">
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect" class="form-select w-auto mx-auto">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h2 id="cardHeader">Retailer Registration</h2>
+        </div>
+        <div class="card-body">
+            <form id="retailerRegistrationForm">
+                <div class="form-group mb-3">
+                    <label for="fullName" id="fullNameLabel">Full Name</label>
+                    <input type="text" id="fullName" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="username" id="usernameLabel">Username</label>
+                    <input type="text" id="username" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password" id="passwordLabel">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="confirmPassword" id="confirmPasswordLabel">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email" id="emailLabel">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="mobileNumber" id="mobileNumberLabel">Mobile Number</label>
+                    <input type="tel" id="mobileNumber" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="companyName" id="companyNameLabel">Company Name</label>
+                    <input type="text" id="companyName" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="gst" id="gstLabel">GST Number/Registration</label>
+                    <input type="text" id="gst" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="companyAddress" id="companyAddressLabel">Company Address</label>
+                    <input type="text" id="companyAddress" class="form-control" required>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="captchaRetailer">
+                    <label class="form-check-label" for="captchaRetailer" id="captchaLabel">I'm not a robot</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" id="registerBtn">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Translation data
+    const translations = {
+        en: {
+            pageTitle: "Retailer Registration",
+            cardHeader: "Retailer Registration",
+            fullNameLabel: "Full Name",
+            usernameLabel: "Username",
+            passwordLabel: "Password",
+            confirmPasswordLabel: "Confirm Password",
+            emailLabel: "Email Address",
+            mobileNumberLabel: "Mobile Number",
+            companyNameLabel: "Company Name",
+            gstLabel: "GST Number/Registration",
+            companyAddressLabel: "Company Address",
+            captchaLabel: "I'm not a robot",
+            registerBtn: "Register"
+        },
+        hi: {
+            pageTitle: "रिटेलर पंजीकरण",
+            cardHeader: "रिटेलर पंजीकरण",
+            fullNameLabel: "पूरा नाम",
+            usernameLabel: "यूजरनेम",
+            passwordLabel: "पासवर्ड",
+            confirmPasswordLabel: "पासवर्ड की पुष्टि करें",
+            emailLabel: "ईमेल पता",
+            mobileNumberLabel: "मोबाइल नंबर",
+            companyNameLabel: "कंपनी का नाम",
+            gstLabel: "जीएसटी नंबर/पंजीकरण",
+            companyAddressLabel: "कंपनी का पता",
+            captchaLabel: "मैं रोबोट नहीं हूँ",
+            registerBtn: "पंजीकरण"
+        },
+        te: {
+            pageTitle: "రిటైలర్ రిజిస్ట్రేషన్",
+            cardHeader: "రిటైలర్ రిజిస్ట్రేషన్",
+            fullNameLabel: "పూర్తి పేరు",
+            usernameLabel: "వాడుకరి పేరు",
+            passwordLabel: "పాస్‌వర్డ్",
+            confirmPasswordLabel: "పాస్‌వర్డ్ ధృవీకరణ",
+            emailLabel: "ఈమెయిల్ చిరునామా",
+            mobileNumberLabel: "మొబైల్ నంబర్",
+            companyNameLabel: "కంపెనీ పేరు",
+            gstLabel: "జిఎస్టి నంబర్/పజికరణ",
+            companyAddressLabel: "కంపెనీ చిరునామా",
+            captchaLabel: "నేను రోబోట్ కాదు",
+            registerBtn: "నమోదు"
+        }
+    };
+
+    const languageSelect = document.getElementById('languageSelect');
+    const cardHeader = document.getElementById('cardHeader');
+    const fullNameLabel = document.getElementById('fullNameLabel');
+    const usernameLabel = document.getElementById('usernameLabel');
+    const passwordLabel = document.getElementById('passwordLabel');
+    const confirmPasswordLabel = document.getElementById('confirmPasswordLabel');
+    const emailLabel = document.getElementById('emailLabel');
+    const mobileNumberLabel = document.getElementById('mobileNumberLabel');
+    const companyNameLabel = document.getElementById('companyNameLabel');
+    const gstLabel = document.getElementById('gstLabel');
+    const companyAddressLabel = document.getElementById('companyAddressLabel');
+    const captchaLabel = document.getElementById('captchaLabel');
+    const registerBtn = document.getElementById('registerBtn');
+    const pageTitle = document.getElementById('pageTitle');
+
+    function applyTranslations(language) {
+        const t = translations[language];
+        document.getElementById('pageTitle').textContent = t.pageTitle;
+        document.getElementById('cardHeader').textContent = t.cardHeader;
+        document.getElementById('fullNameLabel').textContent = t.fullNameLabel;
+        document.getElementById('usernameLabel').textContent = t.usernameLabel;
+        document.getElementById('passwordLabel').textContent = t.passwordLabel;
+        document.getElementById('confirmPasswordLabel').textContent = t.confirmPasswordLabel;
+        document.getElementById('emailLabel').textContent = t.emailLabel;
+        document.getElementById('mobileNumberLabel').textContent = t.mobileNumberLabel;
+        document.getElementById('companyNameLabel').textContent = t.companyNameLabel;
+        document.getElementById('gstLabel').textContent = t.gstLabel;
+        document.getElementById('companyAddressLabel').textContent = t.companyAddressLabel;
+        document.getElementById('captchaLabel').textContent = t.captchaLabel;
+        document.getElementById('registerBtn').textContent = t.registerBtn;
+    }
+
+    languageSelect.addEventListener('change', (event) => {
+        applyTranslations(event.target.value);
+    });
+
+    // Apply default language
+    applyTranslations('en');
+
+    document.getElementById('retailerRegistrationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        // Redirect to retailer_portal.html after form submission
+        window.location.href = 'reatiler_portal.html';
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

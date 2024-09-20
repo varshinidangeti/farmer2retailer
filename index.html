@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm2Retail.com - Farmer & Retailer Portal</title>
+    <link href="styles.css" rel="stylesheet">
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card-header {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .btn-farmer {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-retailer {
+            background-color: #007BFF;
+            color: white;
+        }
+        .btn-farmer:hover, .btn-retailer:hover {
+            opacity: 0.9;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .login-section, .register-section {
+            text-align: center;
+        }
+        h3 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h5 {
+            color: #007BFF;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .features-section {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .features-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .features-section li {
+            margin-bottom: 10px;
+            color: white;
+        }
+        .language-selector {
+            display: inline-block;
+            width: 150px; /* Reduced width */
+        }
+        .language-container {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Title and Intro Section -->
+    <h3>An Assured Contract Farming Platform</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Connecting Farmers and Buyers with Transparency and Trust</h5>
+            <!-- Language selector dropdown -->
+            <div class="language-container">
+                <select id="language-selector" class="form-select language-selector">
+                    <option value="en" selected>English</option>
+                    <option value="te">Telugu</option>
+                    <option value="hi">Hindi</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Farmer Section -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <span id="farmer-header">Farmer Portal</span>
+                </div>
+                <div class="card-body">
+                    <div class="login-section">
+                        <h5 id="farmer-login">Login as Farmer</h5>
+                        <a href="farmer-login.html" class="btn btn-farmer w-100 mb-3">Login</a>
+                    </div>
+                    <div class="register-section">
+                        <h5 id="farmer-register">Register as Farmer</h5>
+                        <a href="farmer-register.html" class="btn btn-farmer w-100">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retailer Section -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center bg-primary">
+                    <span id="retailer-header">Retailer Portal</span>
+                </div>
+                <div class="card-body">
+                    <div class="login-section">
+                        <h5 id="retailer-login">Login as Retailer</h5>
+                        <a href="retailer-login.html" class="btn btn-retailer w-100 mb-3">Login</a>
+                    </div>
+                    <div class="register-section">
+                        <h5 id="retailer-register">Register as Retailer</h5>
+                        <a href="retailer-register.html" class="btn btn-retailer w-100">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+        <h4 id="features-title">Our Features Include:</h4>
+        <ul id="features-list">
+            <li><strong id="feature1">Direct Contracts:</strong> Connecting farmers and retailers without intermediaries.</li>
+            <li><strong id="feature2">Secure Payments:</strong> Guaranteed and timely payments for all transactions.</li>
+            <li><strong id="feature3">Transparent Deals:</strong> Real-time price navigation and contract management.</li>
+            <li><strong id="feature4">Above MSP:</strong> Ensuring contracts provide better prices than the Minimum Selling Price (MSP).</li>
+            <li><strong id="feature5">Market Insights:</strong> Access to data-driven insights for better decision-making.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const translations = {
+        en: {
+            title: "An Assured Contract Farming Platform",
+            subtitle: "Connecting Farmers and Buyers with Transparency and Trust",
+            farmerHeader: "Farmer Portal",
+            farmerLogin: "Login as Farmer",
+            farmerRegister: "Register as Farmer",
+            retailerHeader: "Retailer Portal",
+            retailerLogin: "Login as Retailer",
+            retailerRegister: "Register as Retailer",
+            featuresTitle: "Our Features Include:",
+            feature1: "Direct Contracts: Connecting farmers and retailers without intermediaries.",
+            feature2: "Secure Payments: Guaranteed and timely payments for all transactions.",
+            feature3: "Transparent Deals: Real-time price navigation and contract management.",
+            feature4: "Above MSP: Ensuring contracts provide better prices than the Minimum Selling Price (MSP).",
+            feature5: "Market Insights: Access to data-driven insights for better decision-making."
+        },
+        te: {
+            title: "నిర్ధారిత కాంట్రాక్ట్ ఫార్మింగ్ ప్లాట్‌ఫారం",
+            subtitle: "రైతు మరియు కొనుగోలుదారులతో పారదర్శకత మరియు నమ్మకంతో కలయిక",
+            farmerHeader: "రైతు  పోర్టల్",
+            farmerLogin: "వ్రైతు గా లాగిన్ అవ్వండి",
+            farmerRegister: "వ్రైతు రి‌గా రిజిస్టర్ చేయండి",
+            retailerHeader: "రిటైలర్ పోర్టల్",
+            retailerLogin: "రిటైలర్‌గా లాగిన్ అవ్వండి",
+            retailerRegister: "రిటైలర్‌గా రిజిస్టర్ చేయండి",
+            featuresTitle: "మా లక్షణాలు:",
+            feature1: "ప్రత్యక్ష కాంట్రాక్టులు: మధ్యవర్తులు లేకుండా వ్యవసాయదారులు మరియు రిటైలర్లను కలుపుతుంది.",
+            feature2: "సురక్షిత చెల్లింపులు: అన్ని లావాదేవీలకు హామీ ఇచ్చిన మరియు సమయానికి చెల్లింపులు.",
+            feature3: "పారదర్శక ఒప్పందాలు: రియల్-టైమ్ ధర నావిగేషన్ మరియు కాంట్రాక్ట్ నిర్వహణ.",
+            feature4: "MSP కంటే మించి: కనీస అమ్మకాల ధర (MSP) కంటే మెరుగైన ధరలను నిర్ధారించే కాంట్రాక్టులు.",
+            feature5: "మార్కెట్ అవగాహన: మెరుగైన నిర్ణయాలు తీసుకోవడానికి డేటా-ఆధారిత అవగాహన."
+        },
+        hi: {
+            title: "एक सुनिश्चित अनुबंध खेती मंच",
+            subtitle: "किसानों और खरीदारों को पारदर्शिता और विश्वास के साथ जोड़ना",
+            farmerHeader: "किसान पोर्टल",
+            farmerLogin: "किसान के रूप में लॉगिन करें",
+            farmerRegister: "किसान के रूप में पंजीकृत करें",
+            retailerHeader: "विक्रेता पोर्टल",
+            retailerLogin: "विक्रेता के रूप में लॉगिन करें",
+            retailerRegister: "विक्रेता के रूप में पंजीकृत करें",
+            featuresTitle: "हमारी विशेषताएँ शामिल हैं:",
+            feature1: "सीधे अनुबंध: बिचौलियों के बिना किसानों और खुदरा विक्रेताओं को जोड़ना।",
+            feature2: "सुरक्षित भुगतान: सभी लेन-देन के लिए गारंटीकृत और समय पर भुगतान।",
+            feature3: "पारदर्शी सौदे: वास्तविक समय की कीमत नेविगेशन और अनुबंध प्रबंधन।",
+            feature4: "MSP से अधिक: न्यूनतम बिक्री मूल्य (MSP) की तुलना में बेहतर कीमत सुनिश्चित करने वाले अनुबंध।",
+            feature5: "बाजार अंतर्दृष्टि: बेहतर निर्णय लेने के लिए डेटा-आधारित अंतर्दृष्टि तक पहुंच।"
+        }
+    };
+
+    function changeLanguage(language) {
+        document.querySelector('h3').innerText = translations[language].title;
+        document.querySelector('h5').innerText = translations[language].subtitle;
+        document.getElementById('farmer-header').innerText = translations[language].farmerHeader;
+        document.getElementById('farmer-login').innerText = translations[language].farmerLogin;
+        document.getElementById('farmer-register').innerText = translations[language].farmerRegister;
+        document.getElementById('retailer-header').innerText = translations[language].retailerHeader;
+        document.getElementById('retailer-login').innerText = translations[language].retailerLogin;
+        document.getElementById('retailer-register').innerText = translations[language].retailerRegister;
+        document.getElementById('features-title').innerText = translations[language].featuresTitle;
+        document.getElementById('feature1').innerText = translations[language].feature1;
+        document.getElementById('feature2').innerText = translations[language].feature2;
+        document.getElementById('feature3').innerText = translations[language].feature3;
+        document.getElementById('feature4').innerText = translations[language].feature4;
+        document.getElementById('feature5').innerText = translations[language].feature5;
+    }
+
+    document.getElementById('language-selector').addEventListener('change', function() {
+        changeLanguage(this.value);
+    });
+
+    changeLanguage('en');
+</script>
+
+</body>
+</html>

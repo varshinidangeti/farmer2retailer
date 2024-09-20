@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Details</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .file-upload {
+      margin-bottom: 20px;
+    }
+
+    .language-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-selector {
+      width: 150px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Language Selector -->
+    <div class="language-container">
+      <label for="language-selector">Select Language:</label>
+      <select id="language-selector" class="form-select language-selector">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+      </select>
+    </div>
+
+    <h2 id="form-title">Account Details</h2>
+    <form id="account-form">
+      <label for="full-name" data-translate-key="full-name">Full Name:</label>
+      <input type="text" id="full-name" name="full-name" required><br>
+
+      <label for="adhar-number" data-translate-key="adhar-number">Aadhar Number:</label>
+      <input type="text" id="adhar-number" name="adhar-number" required><br>
+
+      <label for="contact-number" data-translate-key="contact-number">Contact Number:</label>
+      <input type="tel" id="contact-number" name="contact-number" required><br>
+
+      <label for="location" data-translate-key="location">Location:</label>
+      <input type="text" id="location" name="location" required><br>
+
+      <label for="ownership-status" data-translate-key="ownership-status">Ownership Status:</label>
+      <input type="text" id="ownership-status" name="ownership-status" required><br>
+
+      <label for="crop-name" data-translate-key="crop-name">Crop Name:</label>
+      <input type="text" id="crop-name" name="crop-name" required><br>
+
+      <label for="soil-type" data-translate-key="soil-type">Soil Type / Number of Acres:</label>
+      <input type="text" id="soil-type" name="soil-type" required><br>
+
+      <label for="experience" data-translate-key="experience">Experience:</label>
+      <input type="number" id="experience" name="experience" required><br>
+
+      <label for="bank-account-number" data-translate-key="bank-account-number">Bank Account Number:</label>
+      <input type="number" id="bank-account-number" name="bank-account-number" required><br>
+
+      <label for="bank-ifsc" data-translate-key="bank-ifsc">Bank IFSC Code:</label>
+      <input type="text" id="bank-ifsc" name="bank-ifsc" required><br>
+
+      <label for="crop-history" data-translate-key="crop-history">Crop History:</label>
+      <input type="text" id="crop-history" name="crop-history" required><br>
+
+      <label for="digital-signature" data-translate-key="digital-signature">Upload Digital Signature (PDF):</label>
+      <input type="file" id="digital-signature" name="digital-signature" accept=".pdf" required><br>
+
+      <!-- New block for uploading Crop Insurance PDF -->
+      <label for="crop-insurance" data-translate-key="crop-insurance">Upload Crop Insurance (PDF):</label>
+      <input type="file" id="crop-insurance" name="crop-insurance" accept=".pdf"><br>
+
+      <button type="button" onclick="viewDetails()" data-translate-key="view-details">View Details</button>
+      <button type="button" onclick="downloadPDF()" data-translate-key="download-pdf">Download PDF</button>
+    </form>
+  </div>
+
+  <!-- Include jsPDF library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
+  <script>
+    const translations = {
+      en: {
+        'form-title': 'Account Details',
+        'full-name': 'Full Name:',
+        'adhar-number': 'Aadhar Number:',
+        'contact-number': 'Contact Number:',
+        'location': 'Location:',
+        'ownership-status': 'Ownership Status:',
+        'crop-name': 'Crop Name:',
+        'soil-type': 'Soil Type / Number of Acres:',
+        'experience': 'Experience:',
+        'bank-account-number': 'Bank Account Number:',
+        'bank-ifsc': 'Bank IFSC Code:',
+        'crop-history': 'Crop History:',
+        'digital-signature': 'Upload Digital Signature (PDF):',
+        'crop-insurance': 'Upload Crop Insurance (PDF):',
+        'view-details': 'View Details',
+        'download-pdf': 'Download PDF'
+      },
+      hi: {
+        'form-title': 'खाता विवरण',
+        'full-name': 'पूरा नाम:',
+        'adhar-number': 'आधार नंबर:',
+        'contact-number': 'संपर्क नंबर:',
+        'location': 'स्थान:',
+        'ownership-status': 'स्वामित्व स्थिति:',
+        'crop-name': 'फसल का नाम:',
+        'soil-type': 'मृदा प्रकार / एकड़ की संख्या:',
+        'experience': 'अनुभव:',
+        'bank-account-number': 'बैंक खाता नंबर:',
+        'bank-ifsc': 'बैंक IFSC कोड:',
+        'crop-history': 'फसल का इतिहास:',
+        'digital-signature': 'डिजिटल हस्ताक्षर अपलोड करें (PDF):',
+        'crop-insurance': 'फसल बीमा अपलोड करें (PDF):',
+        'view-details': 'विवरण देखें',
+        'download-pdf': 'PDF डाउनलोड करें'
+      },
+      te: {
+        'form-title': 'ఖాతా వివరాలు',
+        'full-name': 'పూర్తి పేరు:',
+        'adhar-number': 'ఆధార్ నెంబర్:',
+        'contact-number': 'సంప్రదింపు నెంబర్:',
+        'location': 'ప్రదేశం:',
+        'ownership-status': 'స్వామ్య స్థితి:',
+        'crop-name': 'పంట పేరు:',
+        'soil-type': 'మట్టి రకం / ఎకరాల సంఖ్య:',
+        'experience': 'అనుభవం:',
+        'bank-account-number': 'బ్యాంక్ ఖాతా నెంబర్:',
+        'bank-ifsc': 'బ్యాంక్ IFSC కోడ్:',
+        'crop-history': 'పంట చరిత్ర:',
+        'digital-signature': 'డిజిటల్ సంతకం అప్‌లోడ్ చేయండి (PDF):',
+        'crop-insurance': 'పంట బీమా అప్‌లోడ్ చేయండి (PDF):',
+        'view-details': 'వివరాలు చూడండి',
+        'download-pdf': 'PDF డౌన్లోడ్ చేయండి'
+      }
+    };
+
+    function translatePage(lang) {
+      document.querySelectorAll('[data-translate-key]').forEach(element => {
+        const key = element.getAttribute('data-translate-key');
+        element.innerText = translations[lang][key] || key;
+      });
+      document.getElementById('form-title').innerText = translations[lang]['form-title'] || 'Account Details';
+    }
+
+    document.getElementById('language-selector').addEventListener('change', (event) => {
+      translatePage(event.target.value);
+    });
+
+    // Initialize translation to default language
+    translatePage('en');
+
+    function viewDetails() {
+      const formData = {
+        fullName: document.querySelector('#full-name').value,
+        adharNumber: document.querySelector('#adhar-number').value,
+        contactNumber: document.querySelector('#contact-number').value,
+        location: document.querySelector('#location').value,
+        ownershipStatus: document.querySelector('#ownership-status').value,
+        soilType: document.querySelector('#soil-type').value,
+        bankIfsc: document.querySelector('#bank-ifsc').value,
+        cropHistory: document.querySelector('#crop-history').value
+      };
+
+      // Store form data in localStorage
+      localStorage.setItem('accountDetails', JSON.stringify(formData));
+
+      // Redirect to a page to view details
+      window.location.href = 'view_details.html';
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      const fullName = document.querySelector('#full-name').value;
+      const adharNumber = document.querySelector('#adhar-number').value;
+      const contactNumber = document.querySelector('#contact-number').value;
+      const location = document.querySelector('#location').value;
+      const ownershipStatus = document.querySelector('#ownership-status').value;
+      const soilType = document.querySelector('#soil-type').value;
+      const bankIfsc = document.querySelector('#bank-ifsc').value;
+      const cropHistory = document.querySelector('#crop-history').value;
+
+      doc.text(`Full Name: ${fullName}`, 10, 10);
+      doc.text(`Aadhar Number: ${adharNumber}`, 10, 20);
+      doc.text(`Contact Number: ${contactNumber}`, 10, 30);
+      doc.text(`Location: ${location}`, 10, 40);
+      doc.text(`Ownership Status: ${ownershipStatus}`, 10, 50);
+      doc.text(`Soil Type / Number of Acres: ${soilType}`, 10, 60);
+      doc.text(`Bank IFSC Code: ${bankIfsc}`, 10, 70);
+      doc.text(`Crop History: ${cropHistory}`, 10, 80);
+
+      // Save the PDF
+      doc.save('Account_Details.pdf');
+    }
+  </script>
+</body>
+</html>

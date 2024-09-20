@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retailer Requirements</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .language-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-selector {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .block {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .block h2 {
+      margin-top: 0;
+    }
+
+    .block p {
+      margin: 5px 0;
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    .block .label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-container">
+      <label for="language-selector" class="form-label">Select Language:</label>
+      <select id="language-selector" class="language-selector">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+      </select>
+    </div>
+
+    <h1 id="page-title">Quick Sell</h1>
+
+    <div class="block" id="retailer-1">
+      <h2 id="retailer-name">Retailer 1</h2>
+      <p><span class="label" id="label-retailer-name">Retailer Name:</span> <span id="retailer-name-value">D-Mart</span></p>
+      <p><span class="label" id="label-crop">Crop:</span> <span id="crop">Rice</span></p>
+      <p><span class="label" id="label-quantity">Quantity:</span> <span id="quantity">2000 bags</span></p>
+      <p><span class="label" id="label-time-period">Time Period:</span> <span id="time-period">January 2025 - March 2025</span></p>
+      <p><span class="label" id="label-max-price">Max Buying Price:</span> <span id="max-price">₹2400 per bag</span></p>
+      <p><span class="label" id="label-frequency">Frequency of Demand:</span> <span id="frequency">Monthly</span></p>
+      <p><span class="label" id="label-location">Location:</span> <span id="location">Mumbai</span></p>
+      <p><span class="label" id="label-number">Number:</span> <span id="number">7702163595</span></p>
+    </div>
+    
+    <!-- Add more blocks as needed -->
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        "page-title": "Quick Sell",
+        "retailer-name": "Retailer 1",
+        "label-retailer-name": "Retailer Name:",
+        "retailer-name-value": "D-Mart",
+        "label-crop": "Crop:",
+        "crop": "Rice",
+        "label-quantity": "Quantity:",
+        "quantity": "2000 bags",
+        "label-time-period": "Time Period:",
+        "time-period": "January 2025 - March 2025",
+        "label-max-price": "Max Buying Price:",
+        "max-price": "₹2400 per bag",
+        "label-frequency": "Frequency of Demand:",
+        "frequency": "Monthly",
+        "label-location": "Location:",
+        "location": "Mumbai",
+        "label-number": "Number:",
+        "number": "7702163595"
+      },
+      hi: {
+        "page-title": "त्वरित बिक्री",
+        "retailer-name": "विक्रेता 1",
+        "label-retailer-name": "विक्रेता का नाम:",
+        "retailer-name-value": "डी-मार्ट",
+        "label-crop": "फसल:",
+        "crop": "चावल",
+        "label-quantity": "मात्रा:",
+        "quantity": "2000 बैग",
+        "label-time-period": "समय अवधि:",
+        "time-period": "जनवरी 2025 - मार्च 2025",
+        "label-max-price": "अधिकतम खरीद मूल्य:",
+        "max-price": "₹2400 प्रति बैग",
+        "label-frequency": "आवश्यकता की आवृत्ति:",
+        "frequency": "मासिक",
+        "label-location": "स्थान:",
+        "location": "मुंबई",
+        "label-number": "नंबर:",
+        "number": "7702163595"
+      },
+      te: {
+        "page-title": "త్వరిత అమ్మకం",
+        "retailer-name": "రిటైలర్ 1",
+        "label-retailer-name": "రిటైలర్ పేరు:",
+        "retailer-name-value": "డి-మార్ట్",
+        "label-crop": "పంట:",
+        "crop": "అన్నం",
+        "label-quantity": "పరిమాణం:",
+        "quantity": "2000 బారెలు",
+        "label-time-period": "సమయం:",
+        "time-period": "జనవరి 2025 - మార్చి 2025",
+        "label-max-price": "గరిష్ట కొనుగోలు ధర:",
+        "max-price": "₹2400 ప్రతి బాగ్",
+        "label-frequency": "డిమాండ్ సాంద్రత:",
+        "frequency": "మాసికం",
+        "label-location": "ప్రదేశం:",
+        "location": "ముంబై",
+        "label-number": "నంబర్:",
+        "number": "7702163595"
+      }
+    };
+
+    function translatePage(language) {
+      const translation = translations[language];
+
+      document.getElementById('page-title').innerText = translation['page-title'];
+      document.getElementById('retailer-name').innerText = translation['retailer-name'];
+      document.getElementById('label-retailer-name').innerText = translation['label-retailer-name'];
+      document.getElementById('retailer-name-value').innerText = translation['retailer-name-value'];
+      document.getElementById('label-crop').innerText = translation['label-crop'];
+      document.getElementById('crop').innerText = translation['crop'];
+      document.getElementById('label-quantity').innerText = translation['label-quantity'];
+      document.getElementById('quantity').innerText = translation['quantity'];
+      document.getElementById('label-time-period').innerText = translation['label-time-period'];
+      document.getElementById('time-period').innerText = translation['time-period'];
+      document.getElementById('label-max-price').innerText = translation['label-max-price'];
+      document.getElementById('max-price').innerText = translation['max-price'];
+      document.getElementById('label-frequency').innerText = translation['label-frequency'];
+      document.getElementById('frequency').innerText = translation['frequency'];
+      document.getElementById('label-location').innerText = translation['label-location'];
+      document.getElementById('location').innerText = translation['location'];
+      document.getElementById('label-number').innerText = translation['label-number'];
+      document.getElementById('number').innerText = translation['number'];
+    }
+
+    document.getElementById('language-selector').addEventListener('change', function() {
+      translatePage(this.value);
+    });
+
+    window.onload = function() {
+      translatePage('en'); // Default to English
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Retailer Login</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .language-select {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="language-select">
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect" class="form-select w-auto mx-auto">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h2 id="cardHeader">Retailer Login</h2>
+        </div>
+        <div class="card-body">
+            <form id="retailerLoginForm">
+                <div class="form-group mb-3">
+                    <label for="retailerUsername" id="usernameLabel">Username</label>
+                    <input type="text" id="retailerUsername" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="retailerPassword" id="passwordLabel">Password</label>
+                    <input type="password" id="retailerPassword" class="form-control" required>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="rememberMeRetailer">
+                    <label class="form-check-label" for="rememberMeRetailer" id="rememberMeLabel">Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" id="loginBtn">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Translation data
+    const translations = {
+        en: {
+            pageTitle: "Retailer Login",
+            cardHeader: "Retailer Login",
+            usernameLabel: "Username",
+            passwordLabel: "Password",
+            rememberMeLabel: "Remember Me",
+            loginBtn: "Login"
+        },
+        hi: {
+            pageTitle: "रिटेलर लॉगिन",
+            cardHeader: "रिटेलर लॉगिन",
+            usernameLabel: "यूजरनेम",
+            passwordLabel: "पासवर्ड",
+            rememberMeLabel: "मुझे याद रखें",
+            loginBtn: "लॉगिन"
+        },
+        te: {
+            pageTitle: "రిటైలర్ లాగిన్",
+            cardHeader: "రిటైలర్ లాగిన్",
+            usernameLabel: "ఉపయోగదారు పేరు",
+            passwordLabel: "పాస్‌వర్డ్",
+            rememberMeLabel: "నాకు జ్ఞాపకం ఉంచు",
+            loginBtn: "లాగిన్"
+        }
+    };
+
+    const languageSelect = document.getElementById('languageSelect');
+    const cardHeader = document.getElementById('cardHeader');
+    const usernameLabel = document.getElementById('usernameLabel');
+    const passwordLabel = document.getElementById('passwordLabel');
+    const rememberMeLabel = document.getElementById('rememberMeLabel');
+    const loginBtn = document.getElementById('loginBtn');
+    const pageTitle = document.getElementById('pageTitle');
+
+    function applyTranslations(language) {
+        const t = translations[language];
+        document.getElementById('pageTitle').textContent = t.pageTitle;
+        document.getElementById('cardHeader').textContent = t.cardHeader;
+        document.getElementById('usernameLabel').textContent = t.usernameLabel;
+        document.getElementById('passwordLabel').textContent = t.passwordLabel;
+        document.getElementById('rememberMeLabel').textContent = t.rememberMeLabel;
+        document.getElementById('loginBtn').textContent = t.loginBtn;
+    }
+
+    languageSelect.addEventListener('change', (event) => {
+        applyTranslations(event.target.value);
+    });
+
+    // Apply default language
+    applyTranslations('en');
+
+    document.getElementById('retailerLoginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        // Redirect to retailer_portal.html after form submission
+        window.location.href = 'reatiler_portal.html';
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Login</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .language-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .language-selector {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <!-- Language Selector -->
+    <div class="language-container">
+        <label for="language-selector">Select Language:</label>
+        <select id="language-selector" class="form-select language-selector">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-success text-white text-center">
+            <span id="login-title">Farmer Login</span>
+        </div>
+        <div class="card-body">
+            <form id="farmerLoginForm">
+                <div class="form-group">
+                    <label for="farmerUsername" id="username-label">Username</label>
+                    <input type="text" id="farmerUsername" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerPassword" id="password-label">Password</label>
+                    <input type="password" id="farmerPassword" class="form-control" required>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="rememberMeFarmer">
+                    <label class="form-check-label" for="rememberMeFarmer" id="remember-me-label">Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-success w-100" id="login-button">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Translations for different languages
+    const translations = {
+        en: {
+            'login-title': 'Farmer Login',
+            'username-label': 'Username',
+            'password-label': 'Password',
+            'remember-me-label': 'Remember Me',
+            'login-button': 'Login'
+        },
+        hi: {
+            'login-title': 'किसान लॉगिन',
+            'username-label': 'उपयोगकर्ता नाम',
+            'password-label': 'पासवर्ड',
+            'remember-me-label': 'मुझे याद रखें',
+            'login-button': 'लॉगिन'
+        },
+        te: {
+            'login-title': 'రైతు లాగిన్',
+            'username-label': 'వాడుకరిపేరు',
+            'password-label': 'పాస్వర్డ్',
+            'remember-me-label': 'నాకురా',
+            'login-button': 'లాగిన్'
+        }
+    };
+
+    function translatePage(lang) {
+        document.getElementById('login-title').innerText = translations[lang]['login-title'] || 'Farmer Login';
+        document.getElementById('username-label').innerText = translations[lang]['username-label'] || 'Username';
+        document.getElementById('password-label').innerText = translations[lang]['password-label'] || 'Password';
+        document.getElementById('remember-me-label').innerText = translations[lang]['remember-me-label'] || 'Remember Me';
+        document.getElementById('login-button').innerText = translations[lang]['login-button'] || 'Login';
+    }
+
+    document.getElementById('language-selector').addEventListener('change', function() {
+        translatePage(this.value);
+    });
+
+    // Initialize with default language
+    window.onload = function() {
+        translatePage(document.getElementById('language-selector').value);
+    };
+
+    document.getElementById('farmerLoginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        // Redirect to home.html after form submission
+        window.location.href = 'home.html';
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

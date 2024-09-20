@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Account Details</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6; /* Adjust line-height to add space between lines */
+    }
+
+    .button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    .language-select {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-select">
+      <label for="languageSelect">Select Language:</label>
+      <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+      </select>
+    </div>
+
+    <h2 id="heading">Account Details</h2>
+    <p id="details"></p>
+    <a href="accountdetails.html" class="button">Back to Form</a>
+  </div>
+
+  <script>
+    const translations = {
+      "en": {
+        heading: "Account Details",
+        details: `
+          Full Name: John Doe
+          Aadhar Number: 1234567890
+          Contact Number: +91-9876543210
+          Location: 123 Main Street, City, State, 123456
+          Ownership Status: Owner
+          Soil Type / Number of Acres: Loamy / 10 Acres
+          Bank IFSC Code: XYZ1234
+          Crop History: Wheat, Paddy
+        `
+      },
+      "hi": {
+        heading: "खाता विवरण",
+        details: `
+          पूरा नाम: जॉन डो
+          आधार नंबर: 1234567890
+          संपर्क नंबर: +91-9876543210
+          स्थान: 123 मेन स्ट्रीट, शहर, राज्य, 123456
+          स्वामित्व की स्थिति: मालिक
+          मिट्टी का प्रकार / एकड़ की संख्या: लूमी / 10 एकड़
+          बैंक IFSC कोड: XYZ1234
+          फसल इतिहास: गेहूं, धान
+        `
+      },
+      "te": {
+        heading: "అకౌంట్ వివరాలు",
+        details: `
+          పూర్తి పేరు: జాన్ డో
+          ఆధార్ నంబర్: 1234567890
+          సంప్రదింపు నంబర్: +91-9876543210
+          స్థానం: 123 మైన్ స్ట్రీట్, సిటీ, రాష్ట్రం, 123456
+          స్వాధీనం స్థితి: యజమాని
+          మట్టి రకం / ఎకరాల సంఖ్య: లోమీ / 10 ఎకరాలు
+          బ్యాంక్ IFSC కోడ్: XYZ1234
+          పంట చరిత్ర: గోధుమ, పత్తి
+        `
+      }
+    };
+
+    function loadAccountDetails() {
+      const accountDetails = JSON.parse(localStorage.getItem('accountDetails'));
+
+      if (accountDetails) {
+        document.getElementById('details').innerText = `
+          Full Name: ${accountDetails.fullName}
+          Aadhar Number: ${accountDetails.adharNumber}
+          Contact Number: ${accountDetails.contactNumber}
+          Location: ${accountDetails.location}
+          Ownership Status: ${accountDetails.ownershipStatus}
+          Soil Type / Number of Acres: ${accountDetails.soilType}
+          Bank IFSC Code: ${accountDetails.bankIfsc}
+          Crop History: ${accountDetails.cropHistory}
+        `;
+      } else {
+        document.getElementById('details').innerText = 'No account details available.';
+      }
+    }
+
+    function changeLanguage() {
+      const language = document.getElementById('languageSelect').value;
+      const translation = translations[language];
+
+      document.getElementById('heading').innerText = translation.heading;
+      document.getElementById('details').innerText = translation.details;
+    }
+
+    document.getElementById('languageSelect').addEventListener('change', changeLanguage);
+
+    window.onload = function() {
+      loadAccountDetails();
+      changeLanguage(); // Apply initial language
+    };
+  </script>
+</body>
+</html>

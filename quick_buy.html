@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Requirement Form</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-block {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    button:hover:enabled {
+      background-color: #0056b3;
+    }
+
+    .flood-warning {
+      color: red;
+      font-weight: bold;
+    }
+
+    .language-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-selector {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-container">
+      <label for="language-selector" class="form-label">Select Language:</label>
+      <select id="language-selector" class="language-selector">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+      </select>
+    </div>
+    
+    <h2 id="form-title">Post Product Requirement</h2>
+    <center>
+      <marquee><h4 id="crisis-alert">This will be activated in crises/flood-affected locations only</h4></marquee>
+    </center>
+
+    <div class="form-block">
+      <label for="product-name" id="product-name-label">Product Name:</label>
+      <input type="text" id="product-name" placeholder="Enter product name" required>
+
+      <label for="quantity" id="quantity-label">Quantity:</label>
+      <input type="number" id="quantity" placeholder="Enter quantity" required>
+
+      <label for="location" id="location-label">Location:</label>
+      <input type="text" id="location" placeholder="Enter location" required>
+
+      <label for="max-price" id="max-price-label">Maximum Buying Price (₹):</label>
+      <input type="number" id="max-price" placeholder="Enter max buying price" required>
+
+      <label for="time-period" id="time-period-label">Time Period (in days):</label>
+      <input type="number" id="time-period" placeholder="Enter time period" required>
+
+      <button id="post-requirement-btn" disabled>Post Requirement</button>
+      <p class="flood-warning" id="flood-warning" style="display:none;">Flood alert for this location! You can post the requirement now.</p>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        "form-title": "Post Product Requirement",
+        "crisis-alert": "This will be activated in crises/flood-affected locations only",
+        "product-name-label": "Product Name:",
+        "quantity-label": "Quantity:",
+        "location-label": "Location:",
+        "max-price-label": "Maximum Buying Price (₹):",
+        "time-period-label": "Time Period (in days):",
+        "post-requirement-btn": "Post Requirement",
+        "flood-warning": "Flood alert for this location! You can post the requirement now."
+      },
+      hi: {
+        "form-title": "उत्पाद आवश्यकता पोस्ट करें",
+        "crisis-alert": "यह केवल आपातकाल/बाढ़ प्रभावित स्थानों में सक्रिय होगा",
+        "product-name-label": "उत्पाद का नाम:",
+        "quantity-label": "मात्रा:",
+        "location-label": "स्थान:",
+        "max-price-label": "अधिकतम खरीद मूल्य (₹):",
+        "time-period-label": "समय अवधि (दिनों में):",
+        "post-requirement-btn": "आवश्यकता पोस्ट करें",
+        "flood-warning": "इस स्थान के लिए बाढ़ की चेतावनी! आप अब आवश्यकता पोस्ट कर सकते हैं।"
+      },
+      te: {
+        "form-title": "ఉత్పత్తి అవసరం పోస్ట్ చేయండి",
+        "crisis-alert": "ఇది విపత్తు/పాలచెప్పిన ప్రాంతాలలో మాత్రమే సక్రియం అవుతుంది",
+        "product-name-label": "ఉత్పత్తి పేరు:",
+        "quantity-label": "మొత్తం:",
+        "location-label": "స్థానం:",
+        "max-price-label": "అధికత కొనుగోలు ధర (₹):",
+        "time-period-label": "సమయం (రోజుల్లో):",
+        "post-requirement-btn": "ఆవశ్యకత పోస్ట్ చేయండి",
+        "flood-warning": "ఈ స్థలానికి వరద హెచ్చరిక! మీరు ఇప్పుడు అవసరాన్ని పోస్ట్ చేయవచ్చు."
+      }
+    };
+
+    function translatePage(language) {
+      const translation = translations[language];
+
+      document.getElementById('form-title').innerText = translation['form-title'];
+      document.getElementById('crisis-alert').innerText = translation['crisis-alert'];
+      document.getElementById('product-name-label').innerText = translation['product-name-label'];
+      document.getElementById('quantity-label').innerText = translation['quantity-label'];
+      document.getElementById('location-label').innerText = translation['location-label'];
+      document.getElementById('max-price-label').innerText = translation['max-price-label'];
+      document.getElementById('time-period-label').innerText = translation['time-period-label'];
+      document.getElementById('post-requirement-btn').innerText = translation['post-requirement-btn'];
+      document.getElementById('flood-warning').innerText = translation['flood-warning'];
+    }
+
+    document.getElementById('language-selector').addEventListener('change', function() {
+      translatePage(this.value);
+    });
+
+    const floodAffectedLocations = ['Mumbai', 'Chennai', 'Kolkata', 'Patna', 'Assam', 'vizag', 'vijaywada'];
+
+    function checkFloodStatus() {
+      const location = document.getElementById('location').value.trim();
+      const postButton = document.getElementById('post-requirement-btn');
+      const floodWarning = document.getElementById('flood-warning');
+
+      if (floodAffectedLocations.includes(location)) {
+        postButton.disabled = false;
+        floodWarning.style.display = 'block';
+      } else {
+        postButton.disabled = true;
+        floodWarning.style.display = 'none';
+      }
+    }
+
+    document.getElementById('location').addEventListener('input', checkFloodStatus);
+
+    document.getElementById('post-requirement-btn').addEventListener('click', function() {
+      const productName = document.getElementById('product-name').value;
+      const quantity = document.getElementById('quantity').value;
+      const location = document.getElementById('location').value;
+      const maxPrice = document.getElementById('max-price').value;
+      const timePeriod = document.getElementById('time-period').value;
+
+      if (productName && quantity && location && maxPrice && timePeriod) {
+        alert(`Product requirement for ${productName} has been posted!`);
+      } else {
+        alert('Please fill out all fields.');
+      }
+    });
+
+    window.onload = function() {
+      translatePage('en'); // Default to English
+    };
+  </script>
+</body>
+</html>

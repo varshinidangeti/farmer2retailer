@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer & Retailer Portal</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome -->
+    <style>
+        .retailer-logo {
+            max-width: 100%;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+            cursor: pointer;
+        }
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f8f9fa;
+            width: 250px;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: #333;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .navbar-toggler {
+                display: inline-block;
+            }
+        }
+        .footer-text {
+            font-size: 0.9rem;
+        }
+        .crop-img {
+            height: 150px;
+            object-fit: cover;
+        }
+        .language-selector {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar for Mobile -->
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i> <!-- Hamburger Icon -->
+        </button>
+        <div class="d-flex align-items-center">
+            <i class="fas fa-bell me-3"></i> <!-- Bell Icon for Notifications -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Language
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                    <li><a class="dropdown-item" href="#" onclick="translate('english')">English</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="translate('telugu')">Telugu</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="translate('hindi')">Hindi</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Sidebar Menu -->
+<div class="collapse sidebar" id="sidebarMenu">
+    <a href="home.html"><span data-translate-key="Home">Home</span></a>
+    <a href="accountdetails.html"><span data-translate-key="Account & Details">Account & Details</span></a>
+    <a href="contract_status.html"><span data-translate-key="Contract Status">Contract Status</span></a>
+    <a href="make_contract.html"><span data-translate-key="Make a Contract">Make a Contract</span></a>
+    <a href="my_contracts.html"><span data-translate-key="My Contracts">My Contracts</span></a>
+    <a href="crop_insurance.html"><span data-translate-key="Crop Insurance">Crop Insurance</span></a>
+    <a href="retailers_connect.html"><span data-translate-key="Retailer's Connect">Retailer's Connect</span></a>
+    <a href="track_product.html"><span data-translate-key="Track Your Product">Track Your Product</span></a>
+     <a href="quicksell.html"><span data-translate-key="quicksell">quicksell</span></a>
+    <a href="help_support.html"><span data-translate-key="Help and Support">Help and Support</span></a>
+    <a href="about_us.html"><span data-translate-key="about_us">About us</span></a>
+    <a href="signout.html" onclick="signOut()"><span data-translate-key="Sign out">Sign out</span></a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container mt-5">
+        <!-- Search Bar -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white text-center">
+                <span data-translate-key="Farmers Portal">Farmers Portal</span>
+            </div>
+            <div class="card-body">
+                <form class="row g-3">
+                    <div class="col-md-6">
+                        <label for="location" class="form-label"><span data-translate-key="Location">Location</span></label>
+                        <input type="text" class="form-control" id="location" placeholder="Enter your location">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="search" class="form-label"><span data-translate-key="Search Retailers / Crops">Search Retailers / Crops</span></label>
+                        <input type="text" class="form-control" id="search" placeholder="Search for retailers or crops">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success w-100"><span data-translate-key="Search">Search</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Assured Retailers Section -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white text-center">
+                <span data-translate-key="Assured Retailers">Assured Retailers</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 col-md-3 text-center">
+                        <a href="demart.html">
+                            <img src="https://logowik.com/content/uploads/images/dmart-avenue-supermarts4302.jpg" alt="D-Mart" class="img-fluid retailer-logo mb-2">
+                            <p>D-Mart</p>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <a href="smartindia.html" onclick="showRequestForm('Reliance Smart')">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPCvxCQupug80KCU6r9sJMWMEq-DSl47-bGg&s" alt="Reliance Smart" class="img-fluid retailer-logo mb-2">
+                            <p>Reliance Smart</p>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <a href="big_basket.html" onclick="showRequestForm('Big Basket')">
+                            <img src="https://seeklogo.com/images/B/bigbasket-logo-CCFD652568-seeklogo.com.png" alt="Big Basket" class="img-fluid retailer-logo mb-2">
+                            <p>Big Basket</p>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <a href="jio_mart.html" onclick="showRequestForm('Jio Mart')">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/54/JioMart_logo.svg/1200px-JioMart_logo.svg.png" alt="Jio Mart" class="img-fluid retailer-logo mb-2">
+                            <p>Jio Mart</p>
+                        </a>
+                    </div>
+                </div>
+                <p class="text-center mt-3"><span data-translate-key="Farmers can directly connect with retailers for guaranteed purchase and fair prices within 6-7 days.">Farmers can directly connect with retailers for guaranteed purchase and fair prices within 6-7 days.</span></p>
+            </div>
+        </div>
+
+        <!-- Assured Contract Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title text-center" data-translate-key="Assured Contract Farming Platform">Assured Contract Farming Platform</h5>
+                <p class="card-text text-center" data-translate-key="This platform ensures direct communication and monitoring between farmers and retailers.">This platform ensures direct communication and monitoring between farmers and retailers.</p>
+            </div>
+        </div>
+
+        <!-- Top Crops Section -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white text-center">
+                <span data-translate-key="Top Crops in Market">Top Crops in Market</span>
+            </div>
+            <div class="row text-center">
+                <div class="col-6 col-md-2">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqWZNye-HK7YD9WKUIMZCieem0Nx48pOlHAg&s" alt="Paddy" class="img-fluid crop-img mb-2">
+                    <p><span data-translate-key="Paddy">Paddy</span></p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQDWb0MOXHjZWOkKz8Kkott2hsem2trQJt0EWBtCcOC_HAbpreg" alt="Wheat" class="img-fluid crop-img mb-2">
+                    <p><span data-translate-key="Wheat">Wheat</span></p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSacITdoJrFplzg2zk4GDMRvsnGYLA_u_urFQ&s" alt="Maize" class="img-fluid crop-img mb-2">
+                    <p><span data-translate-key="Maize">Maize</span></p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpJzpo81lfSabh0tdoUeD0NYMPd0XJbxS5zg&s" alt="Sugarcane" class="img-fluid crop-img mb-2">
+                    <p><span data-translate-key="Sugarcane">Sugarcane</span></p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS05yIAyCgHrQiL56sNQSorWN_powVNX63v2w&s" alt="Cotton" class="img-fluid crop-img mb-2">
+                    <p><span data-translate-key="Cotton">Cotton</span></p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGNRUuNzK8O62AJKJpcvNXfaaCEy3m5rGcGw&s" alt="Soybean" class="img-fluid crop-img mb-2">
+                    <p><span data-translate-key="Soybean">Soybean</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="about" class="container my-5"></section>
+    <h2 class="text-center">Who We Are</h2>
+    <p class="text-center mt-3">
+        <span class="highlight-text">India ranks second in farm output but has failed to eliminate the financial crises of farmers.</span> 
+        AgriRetail.com is here to bridge this gap by providing farmers with assured contract farming opportunities and guaranteed pricing. 
+        We are revolutionizing the agricultural market by connecting farmers directly with retailers, offering transparency, better pricing, and crop insurance. Our platform empowers farmers by eliminating middlemen, securing payments, and providing professional support throughout the process.
+    </p>
+    <div class="text-center">
+       
+    </div>
+</section>
+
+<!-- Our Services Section -->
+<section id="services" class="container my-5">
+    <h2 class="text-center">What We Offer</h2>
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <i class="fas fa-handshake fa-3x"></i>
+            <h4>Guaranteed Pricing</h4>
+            <p>We offer prices that are better than the government-mandated minimum selling price, ensuring profitability for farmers.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-shield-alt fa-3x"></i>
+            <h4>Crop Insurance</h4>
+            <p>Safeguard your crops with our comprehensive insurance plans, giving you peace of mind in the event of crop failure.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-chart-line fa-3x"></i>
+            <h4>Market Insights</h4>
+            <p>Get up-to-date market insights and trends to help you make informed decisions about crop pricing and sales.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-comments-dollar fa-3x"></i>
+            <h4>Price Negotiation for Farmers</h4>
+            <p>Our platform offers a secure space for farmers to negotiate prices directly with retailers, ensuring they get the best deals for their produce.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-mobile-alt fa-3x"></i>
+            <h4>User-Friendly Portal</h4>
+            <p>Our portal is designed for easy use, accessible on mobile devices, and available in multiple regional languages.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-sync-alt fa-3x"></i>
+            <h4>Seamless Transactions</h4>
+            <p>Experience secure and timely payments directly to your account, ensuring your financial stability.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQs Section -->
+<section id="faqs" class="container my-5">
+    <h2 class="text-center">Frequently Asked Questions</h2>
+    <div class="accordion mt-4" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    How does AgriRetail ensure fair pricing for farmers?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    AgriRetail uses a transparent pricing mechanism and market analysis to offer farmers competitive rates above the minimum selling price.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    How can farmers access the contract farming options?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Farmers can access the contract farming options by logging into their account on the portal and navigating to the "Make a Contract" section. Here, they can view available contracts and secure deals with retailers directly.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Is crop insurance mandatory for farmers?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Crop insurance is optional but highly recommended for all farmers to protect their investments and ensure coverage in case of adverse weather conditions or other calamities.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    How does the Quick Sell feature work during emergencies?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    The Quick Sell feature allows farmers to sell their products instantly toretailers who are facing stock shortages during emergencies, such as floods. Farmers can view the stock requirements from retailers in the portal and contact them directly to negotiate the sale of their produce. This feature is only activated during natural calamities and ensures timely transactions.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<!-- Footer -->
+<footer class="text-center mt-4 footer-text">
+    <p>&copy; 2024 Farmers & Retailers Portal. <span data-translate-key="All Rights Reserved">All Rights Reserved</span>.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script>
+    function translate(lang) {
+        const translations = {
+            'telugu': {
+                'Farmers Portal': 'వ్యాపారుల పోర్టల్',
+                'Assured Retailers': 'అసుర్‌డ్ రిటైలర్స్',
+                'Assured Contract Farming Platform': 'అసుర్‌డ్ కాంట్రాక్ట్ ఫార్మింగ్ ప్లాట్‌ఫారమ్',
+                'Top Crops in Market': 'మార్కెట్‌లో టాప్ క్రాప్స్',
+                'This platform ensures direct communication and monitoring between farmers and retailers.': 'ఈ ప్లాట్‌ఫార్మ్ రైతులు మరియు రిటైలర్లు మధ్య నేరుగా కమ్యూనికేషన్ మరియు మానిటరింగ్‌ను నిర్ధారిస్తుంది.',
+                'Weather Forecasts': 'వాతావరణ అంచనాలు',
+                'Flood Alerts': 'బురద హెచ్చరికలు',
+                'Agri Tips': 'వ్యవసాయ సలహాలు',
+                'Home': 'హోమ్',
+                'Account & Details': 'ఖాతా మరియు వివరాలు',
+                'Contract Status': 'కాంట్రాక్ట్ స్థితి',
+                'Make a Contract': 'ఒక ఒప్పందం చేయండి',
+                'My Contracts': 'నా ఒప్పందాలు',
+                'Crop Insurance': 'పంట బీమా',
+                'Retailer\'s Connect': 'రిటైలర్‌కి కనెక్ట్',
+                'Track Your Product': 'మీ ఉత్పత్తిని ట్రాక్ చేయండి',
+                'Help and Support': 'సహాయం మరియు మద్దతు',
+                'Sign out': 'సైన్ అవుట్'
+            },
+            'hindi': {
+                'Farmers Portal': 'किसान पोर्टल',
+                'Assured Retailers': 'सुनिश्चित खुदरा विक्रेता',
+                'Assured Contract Farming Platform': 'सुनिश्चित अनुबंध खेती मंच',
+                'Top Crops in Market': 'बाजार में शीर्ष फसलें',
+                'This platform ensures direct communication and monitoring between farmers and retailers.': 'यह मंच किसानों और खुदरा विक्रेताओं के बीच सीधी संचार और निगरानी सुनिश्चित करता है।',
+                'Weather Forecasts': 'मौसम पूर्वानुमान',
+                'Flood Alerts': 'बाढ़ अलर्ट',
+                'Agri Tips': 'कृषि टिप्स',
+                'Home': 'होम',
+                'Account & Details': 'खाता और विवरण',
+                'Contract Status': 'अनुबंध की स्थिति',
+                'Make a Contract': 'अनुबंध बनाएं',
+                'My Contracts': 'मेरे अनुबंध',
+                'Crop Insurance': 'फसल बीमा',
+                'Retailer\'s Connect': 'खुदरा विक्रेता से कनेक्ट',
+                'Track Your Product': 'अपने उत्पाद को ट्रैक करें',
+                'Help and Support': 'सहायता और समर्थन',
+                'Sign out': 'साइन आउट'
+            },
+            'english': {
+                'Farmers Portal': 'Farmers Portal',
+                'Assured Retailers': 'Assured Retailers',
+                'Assured Contract Farming Platform': 'Assured Contract Farming Platform',
+                'Top Crops in Market': 'Top Crops in Market',
+                'This platform ensures direct communication and monitoring between farmers and retailers.': 'This platform ensures direct communication and monitoring between farmers and retailers.',
+                'Weather Forecasts': 'Weather Forecasts',
+                'Flood Alerts': 'Flood Alerts',
+                'Agri Tips': 'Agri Tips',
+                'Home': 'Home',
+                'Account & Details': 'Account & Details',
+                'Contract Status': 'Contract Status',
+                'Make a Contract': 'Make a Contract',
+                'My Contracts': 'My Contracts',
+                'Crop Insurance': 'Crop Insurance',
+                'Retailer\'s Connect': 'Retailer\'s Connect',
+                'Track Your Product': 'Track Your Product',
+                'Help and Support': 'Help and Support',
+                'Sign out': 'Sign out'
+            }
+        };
+
+        console.log(`Translating to ${lang}`);
+
+        const elements = document.querySelectorAll('[data-translate-key]');
+        elements.forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
+            } else {
+                console.log(`No translation found for key: ${key}`);
+            }
+        });
+    }
+
+    function signOut() {
+        console.log('Signing out...');
+        // Add sign out functionality here
+    }
+
+    function showRequestForm(retailer) {
+        console.log(`Showing request form for ${retailer}`);
+        // Add functionality to show request form
+    }
+</script>
+</body>
+</html>

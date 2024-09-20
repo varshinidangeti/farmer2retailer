@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Status</title>
+  <link href="styles.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- Include jsPDF Library -->
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .status-box {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .status-text {
+      margin-left: 10px;
+      font-size: 1.2rem;
+    }
+
+    .contract-actions {
+      display: none; /* Hidden initially */
+      margin-top: 20px;
+    }
+
+    .language-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-selector {
+      width: 150px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Language Selector -->
+    <div class="language-container">
+      <label for="language-selector">Select Language:</label>
+      <select id="language-selector" class="form-select language-selector">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+      </select>
+    </div>
+
+    <h2 id="contract-status-title">Contract Status</h2>
+
+    <div class="card">
+      <div class="card-header bg-primary text-white text-center" id="card-header">
+        Contract Status
+      </div>
+      <div class="card-body">
+        <div class="status-box">
+          <input type="checkbox" id="approvalCheckbox" disabled>
+          <span id="statusText" class="status-text text-muted">Pending approval...</span>
+        </div>
+        <p class="text-muted" id="status-description">Your contract is currently pending approval from the retailer. You will receive an update soon.</p>
+
+        <!-- Contract Actions -->
+        <div class="contract-actions" id="contractActions">
+          <button class="btn btn-success me-2" onclick="generatePDF()" id="view-pdf-btn">View Contract PDF</button>
+          <button class="btn btn-secondary" onclick="generatePDF()" id="download-pdf-btn">Download PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Translations for different languages
+    const translations = {
+      en: {
+        'contract-status-title': 'Contract Status',
+        'card-header': 'Contract Status',
+        'statusText': 'Pending approval...',
+        'status-description': 'Your contract is currently pending approval from the retailer. You will receive an update soon.',
+        'view-pdf-btn': 'View Contract PDF',
+        'download-pdf-btn': 'Download PDF'
+      },
+      hi: {
+        'contract-status-title': 'संविदा की स्थिति',
+        'card-header': 'संविदा की स्थिति',
+        'statusText': 'मंजूरी की प्रतीक्षा...',
+        'status-description': 'आपकी संविदा वर्तमान में रिटेलर से मंजूरी की प्रतीक्षा कर रही है। आपको जल्द ही एक अपडेट प्राप्त होगा।',
+        'view-pdf-btn': 'संविदा PDF देखें',
+        'download-pdf-btn': 'PDF डाउनलोड करें'
+      },
+      te: {
+        'contract-status-title': 'కాంట్రాక్ట్ స్థితి',
+        'card-header': 'కాంట్రాక్ట్ స్థితి',
+        'statusText': 'ఆమోదం కోసం వేచి ఉంది...',
+        'status-description': 'మీ కాంట్రాక్ట్ ప్రస్తుతం రిటైలర్ నుండి ఆమోదం కోసం వేచి ఉంది. మీరు త్వరలో ఒక నవీకరణ పొందుతారు.',
+        'view-pdf-btn': 'కాంట్రాక్ట్ PDF చూడండి',
+        'download-pdf-btn': 'PDF డౌన్‌లోడ్ చేయండి'
+      }
+    };
+
+    // Function to translate the page
+    function translatePage(lang) {
+      document.getElementById('contract-status-title').innerText = translations[lang]['contract-status-title'] || 'Contract Status';
+      document.getElementById('card-header').innerText = translations[lang]['card-header'] || 'Contract Status';
+      document.getElementById('statusText').innerText = translations[lang]['statusText'] || 'Pending approval...';
+      document.getElementById('status-description').innerText = translations[lang]['status-description'] || 'Your contract is currently pending approval from the retailer. You will receive an update soon.';
+      document.getElementById('view-pdf-btn').innerText = translations[lang]['view-pdf-btn'] || 'View Contract PDF';
+      document.getElementById('download-pdf-btn').innerText = translations[lang]['download-pdf-btn'] || 'Download PDF';
+    }
+
+    // Handle language change
+    document.getElementById('language-selector').addEventListener('change', (event) => {
+      translatePage(event.target.value);
+    });
+
+    // Simulated contract data (Replace this with actual data retrieval if necessary)
+    const contractData = {
+      retailer: "D-Mart",
+      product: "Rice",
+      quantity: "130-150 bags",
+      deadline: "6/5/2025",
+      msp: "₹2350 per bag"
+    };
+
+    // Simulate approval delay (for demo purposes)
+    setTimeout(function() {
+      document.getElementById('approvalCheckbox').checked = true;
+      document.getElementById('statusText').textContent = 'Approved';
+      document.getElementById('statusText').classList.remove('text-muted');
+      document.getElementById('statusText').classList.add('text-success');
+
+      // Show contract actions
+      document.getElementById('contractActions').style.display = 'block';
+
+    }, 5000); // Simulate a 5 second delay
+
+    // Function to generate PDF from contract information
+    function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Get contract info content
+      const retailer = contractData.retailer;
+      const product = contractData.product;
+      const quantity = contractData.quantity;
+      const deadline = contractData.deadline;
+      const msp = contractData.msp;
+
+      // Add content to PDF
+      doc.text("Contract Information", 10, 10);
+      doc.text(`Retailer: ${retailer}`, 10, 20);
+      doc.text(`Product: ${product}`, 10, 30);
+      doc.text(`Quantity: ${quantity}`, 10, 40);
+      doc.text(`Deadline: ${deadline}`, 10, 50);
+      doc.text(`Predetermined MSP: ${msp}`, 10, 60);
+
+      // Save the PDF
+      doc.save('contract.pdf');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

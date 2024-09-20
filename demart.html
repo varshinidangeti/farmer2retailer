@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-Mart Crop Request & Account Details</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main-content {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            margin-bottom: 30px;
+        }
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .language-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-selector {
+            width: 150px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-content">
+    <!-- Language Selector -->
+    <div class="language-container">
+        <label for="language-selector">Select Language:</label>
+        <select id="language-selector" class="form-select language-selector">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+
+    <div class="container mt-5">
+        <!-- D-Mart Crop Request Form -->
+        <h2 id="crop-form-title">D-Mart Crop Request Form</h2>
+        <form id="cropForm" class="row g-3">
+            <label for="location" id="location-label" class="form-label">Location</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="crop" id="crop-label" class="form-label">Select Crop Type</label>
+            <select id="crop" name="crop">
+                <option value="paddy">Paddy</option>
+                <option value="tomato">Tomato</option>
+                <option value="wheat">Wheat</option>
+                <option value="millets">Millets</option>
+                <option value="maize">Maize</option>
+                <option value="sugar">Sugar</option>
+            </select>
+
+            <label for="quantity" id="quantity-label" class="form-label">Select Quantity</label>
+            <select id="quantity" name="quantity">
+                <option value="100-150">100-150</option>
+                <option value="1000-1500">1000-1500</option>
+                <option value="150-500">150-500</option>
+                <option value="300-400">300-400</option>
+                <option value="600-700">600-700</option>
+                <option value="800-900">800-900</option>
+            </select>
+        </form>
+    </div>
+
+    <!-- Account Details Form -->
+    <div class="container">
+        <h2 id="account-details-title">Account Details</h2>
+        <form id="accountForm">
+            <label for="full-name" id="full-name-label">Full Name:</label>
+            <input type="text" id="full-name" name="full-name" required>
+
+            <label for="adhar-number" id="adhar-number-label">Aadhar Number:</label>
+            <input type="text" id="adhar-number" name="adhar-number" required>
+
+            <label for="contact-number" id="contact-number-label">Contact Number:</label>
+            <input type="tel" id="contact-number" name="contact-number" required>
+
+            <label for="account-location" id="account-location-label">Location:</label>
+            <input type="text" id="account-location" name="account-location" required>
+
+            <label for="ownership-status" id="ownership-status-label">Ownership Status:</label>
+            <input type="text" id="ownership-status" name="ownership-status" required>
+
+            <label for="soil-type" id="soil-type-label">Soil Type / Number of Acres:</label>
+            <input type="text" id="soil-type" name="soil-type" required>
+
+            <label for="experience" id="experience-label">Experience:</label>
+            <input type="number" id="experience" name="experience" required>
+
+            <label for="bank-ifsc" id="bank-ifsc-label">Bank IFSC Code:</label>
+            <input type="text" id="bank-ifsc" name="bank-ifsc" required>
+
+            <label for="crop-history" id="crop-history-label">Crop History:</label>
+            <input type="text" id="crop-history" name="crop-history" required>
+        </form>
+    </div>
+
+    <!-- Download PDF Button -->
+    <div class="container">
+        <button onclick="generatePDF()" id="submit-request-btn">Submit request</button>
+    </div>
+</div>
+
+<!-- Include jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
+
+<script>
+    // Translations for different languages
+    const translations = {
+        en: {
+            'crop-form-title': 'D-Mart Crop Request Form',
+            'location-label': 'Location',
+            'crop-label': 'Select Crop Type',
+            'quantity-label': 'Select Quantity',
+            'account-details-title': 'Account Details',
+            'full-name-label': 'Full Name:',
+            'adhar-number-label': 'Aadhar Number:',
+            'contact-number-label': 'Contact Number:',
+            'account-location-label': 'Location:',
+            'ownership-status-label': 'Ownership Status:',
+            'soil-type-label': 'Soil Type / Number of Acres:',
+            'experience-label': 'Experience:',
+            'bank-ifsc-label': 'Bank IFSC Code:',
+            'crop-history-label': 'Crop History:',
+            'submit-request-btn': 'Submit request'
+        },
+        hi: {
+            'crop-form-title': 'डी-मार्ट फसल अनुरोध फॉर्म',
+            'location-label': 'स्थान',
+            'crop-label': 'फसल प्रकार चुनें',
+            'quantity-label': 'मात्रा चुनें',
+            'account-details-title': 'खाता विवरण',
+            'full-name-label': 'पूरा नाम:',
+            'adhar-number-label': 'आधार संख्या:',
+            'contact-number-label': 'संपर्क नंबर:',
+            'account-location-label': 'स्थान:',
+            'ownership-status-label': 'स्वामित्व की स्थिति:',
+            'soil-type-label': 'मिट्टी का प्रकार / एकड़ की संख्या:',
+            'experience-label': 'अनुभव:',
+            'bank-ifsc-label': 'बैंक IFSC कोड:',
+            'crop-history-label': 'फसल इतिहास:',
+            'submit-request-btn': 'अनुरोध सबमिट करें'
+        },
+        te: {
+            'crop-form-title': 'డి-మార్ట్ పంట అభ్యర్థన ఫారమ్',
+            'location-label': 'ప్రదేశం',
+            'crop-label': 'పంట రకం ఎంపిక చేయండి',
+            'quantity-label': 'పరిమాణాన్ని ఎంచుకోండి',
+            'account-details-title': 'ఖాతా వివరాలు',
+            'full-name-label': 'పూర్తి పేరు:',
+            'adhar-number-label': 'ఆధార్ సంఖ్య:',
+            'contact-number-label': 'సంప్రదింపు సంఖ్య:',
+            'account-location-label': 'ప్రదేశం:',
+            'ownership-status-label': 'ఆధికారపు స్థితి:',
+            'soil-type-label': 'మట్టికి రకం / ఎకరాల సంఖ్య:',
+            'experience-label': 'అనుభవం:',
+            'bank-ifsc-label': 'బ్యాంక్ IFSC కోడ్:',
+            'crop-history-label': 'పంట చరిత్ర:',
+            'submit-request-btn': 'అభ్యర్థనను సమర్పించండి'
+        }
+    };
+
+    // Function to translate the page
+    function translatePage(lang) {
+        document.getElementById('crop-form-title').innerText = translations[lang]['crop-form-title'] || 'D-Mart Crop Request Form';
+        document.getElementById('location-label').innerText = translations[lang]['location-label'] || 'Location';
+        document.getElementById('crop-label').innerText = translations[lang]['crop-label'] || 'Select Crop Type';
+        document.getElementById('quantity-label').innerText = translations[lang]['quantity-label'] || 'Select Quantity';
+        document.getElementById('account-details-title').innerText = translations[lang]['account-details-title'] || 'Account Details';
+        document.getElementById('full-name-label').innerText = translations[lang]['full-name-label'] || 'Full Name:';
+        document.getElementById('adhar-number-label').innerText = translations[lang]['adhar-number-label'] || 'Aadhar Number:';
+        document.getElementById('contact-number-label').innerText = translations[lang]['contact-number-label'] || 'Contact Number:';
+        document.getElementById('account-location-label').innerText = translations[lang]['account-location-label'] || 'Location:';
+        document.getElementById('ownership-status-label').innerText = translations[lang]['ownership-status-label'] || 'Ownership Status:';
+        document.getElementById('soil-type-label').innerText = translations[lang]['soil-type-label'] || 'Soil Type / Number of Acres:';
+        document.getElementById('experience-label').innerText = translations[lang]['experience-label'] || 'Experience:';
+        document.getElementById('bank-ifsc-label').innerText = translations[lang]['bank-ifsc-label'] || 'Bank IFSC Code:';
+        document.getElementById('crop-history-label').innerText = translations[lang]['crop-history-label'] || 'Crop History:';
+        document.getElementById('submit-request-btn').innerText = translations[lang]['submit-request-btn'] || 'Submit request';
+    }
+
+    // Event listener for language change
+    document.getElementById('language-selector').addEventListener('change', function() {
+        translatePage(this.value);
+    });
+
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Collect Crop Request Form Data
+        const location = document.getElementById('location').value;
+        const crop = document.getElementById('crop').value;
+        const quantity = document.getElementById('quantity').value;
+
+        // Collect Account Details Form Data
+        const fullName = document.getElementById('full-name').value;
+        const adharNumber = document.getElementById('adhar-number').value;
+        const contactNumber = document.getElementById('contact-number').value;
+        const accountLocation = document.getElementById('account-location').value;
+        const ownershipStatus = document.getElementById('ownership-status').value;
+        const soilType = document.getElementById('soil-type').value;
+        const experience = document.getElementById('experience').value;
+        const bankIfsc = document.getElementById('bank-ifsc').value;
+        const cropHistory = document.getElementById('crop-history').value;
+
+        // Add D-Mart Crop Request data to the PDF
+        doc.text("D-Mart Crop Request Form", 10, 10);
+        doc.text(`Location: ${location}`, 10, 20);
+        doc.text(`Crop Type: ${crop}`, 10, 30);
+        doc.text(`Quantity: ${quantity}`, 10, 40);
+
+        // Add Account Details data to the PDF
+        doc.text("Account Details", 10, 60);
+        doc.text(`Full Name: ${fullName}`, 10, 70);
+        doc.text(`Aadhar Number: ${adharNumber}`, 10, 80);
+        doc.text(`Contact Number: ${contactNumber}`, 10, 90);
+        doc.text(`Location: ${accountLocation}`, 10, 100);
+        doc.text(`Ownership Status: ${ownershipStatus}`, 10, 110);
+        doc.text(`Soil Type: ${soilType}`, 10, 120);
+        doc.text(`Experience: ${experience}`, 10, 130);
+        doc.text(`Bank IFSC Code: ${bankIfsc}`, 10, 140);
+        doc.text(`Crop History: ${cropHistory}`, 10, 150);
+
+        // Save the PDF
+        doc.save('D-Mart-Crop-Request-Account-Details.pdf');
+    }
+</script>
+
+</body>
+</html>

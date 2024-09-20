@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Details Table</title>
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        table {
+            width: 90%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-container {
+            margin-bottom: 20px;
+        }
+        .language-selector {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- Language Selector -->
+        <div class="language-container">
+            <label for="language-selector">Select Language:</label>
+            <select id="language-selector" class="form-select language-selector">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+            </select>
+        </div>
+
+        <h2 id="table-title">Farmer Details Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th id="col-name">Farmer Name</th>
+                    <th id="col-crop">Type of Crop</th>
+                    <th id="col-quantity">Quantity(per bag)</th>
+                    <th id="col-price">Expected Price</th>
+                    <th id="col-experience">Experience</th>
+                    <th id="col-adhar">Aadhar Number</th>
+                    <th id="col-katha">1B Katha Number</th>
+                    <th id="col-contact">Contact Number</th>
+                    <th id="col-bank">Bank Account Number</th>
+                    <th id="col-ifsc">IFSC Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Rajesh Kumar</td>
+                    <td>Wheat</td>
+                    <td>350-400</td>
+                    <td>2600</td>
+                    <td>10 years</td>
+                    <td>1234 5678 9123</td>
+                    <td>KB-5678</td>
+                    <td>9876543210</td>
+                    <td>1234567890123456</td>
+                    <td>IFSC0001</td>
+                </tr>
+                <tr>
+                    <td>Sita Devi</td>
+                    <td>Rice</td>
+                    <td>280-300</td>
+                    <td>2500</td>
+                    <td>15 years</td>
+                    <td>2345 6789 1234</td>
+                    <td>KB-6789</td>
+                    <td>8765432109</td>
+                    <td>2345678901234567</td>
+                    <td>IFSC0002</td>
+                </tr>
+                <tr>
+                    <td>Gopal Singh</td>
+                    <td>Corn</td>
+                    <td>350-380</td>
+                    <td>1800</td>
+                    <td>8 years</td>
+                    <td>3456 7890 1234</td>
+                    <td>KB-7890</td>
+                    <td>7654321098</td>
+                    <td>3456789012345678</td>
+                    <td>IFSC0003</td>
+                </tr>
+                <tr>
+                    <td>Aarti Patel</td>
+                    <td>Barley</td>
+                    <td>400-480</td>
+                    <td>3000</td>
+                    <td>12 years</td>
+                    <td>4567 8901 2345</td>
+                    <td>KB-8901</td>
+                    <td>6543210987</td>
+                    <td>4567890123456789</td>
+                    <td>IFSC0004</td>
+                </tr>
+                <tr>
+                    <td>Vikram Yadav</td>
+                    <td>Sugarcane</td>
+                    <td>540-600</td>
+                    <td>4200</td>
+                    <td>20 years</td>
+                    <td>5678 9012 3456</td>
+                    <td>KB-9012</td>
+                    <td>5432109876</td>
+                    <td>5678901234567890</td>
+                    <td>IFSC0005</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Translations for different languages
+        const translations = {
+            en: {
+                'table-title': 'Farmer Details Table',
+                'col-name': 'Farmer Name',
+                'col-crop': 'Type of Crop',
+                'col-quantity': 'Quantity(per bag)',
+                'col-price': 'Expected Price',
+                'col-experience': 'Experience',
+                'col-adhar': 'Aadhar Number',
+                'col-katha': '1B Katha Number',
+                'col-contact': 'Contact Number',
+                'col-bank': 'Bank Account Number',
+                'col-ifsc': 'IFSC Code'
+            },
+            hi: {
+                'table-title': 'किसान विवरण तालिका',
+                'col-name': 'किसान का नाम',
+                'col-crop': 'फसल का प्रकार',
+                'col-quantity': 'मात्रा (प्रति बैग)',
+                'col-price': 'अपेक्षित मूल्य',
+                'col-experience': 'अनुभव',
+                'col-adhar': 'आधार नंबर',
+                'col-katha': '1B काथा नंबर',
+                'col-contact': 'संपर्क नंबर',
+                'col-bank': 'बैंक खाता नंबर',
+                'col-ifsc': 'IFSC कोड'
+            },
+            te: {
+                'table-title': 'రైతు వివరాల పట్టిక',
+                'col-name': 'రైతు పేరు',
+                'col-crop': 'పంట రకం',
+                'col-quantity': 'మొత్తం (ప్రతి బ్యాగు)',
+                'col-price': 'నిరీక్షించబడిన ధర',
+                'col-experience': 'అనుభవం',
+                'col-adhar': 'ఆధార్ నెంబర్',
+                'col-katha': '1B కాథా నెంబర్',
+                'col-contact': 'సంపర్క నెంబర్',
+                'col-bank': 'బ్యాంకు ఖాతా నెంబర్',
+                'col-ifsc': 'IFSC కోడ్'
+            }
+        };
+
+        function translatePage(lang) {
+            document.getElementById('table-title').innerText = translations[lang]['table-title'] || 'Farmer Details Table';
+            document.getElementById('col-name').innerText = translations[lang]['col-name'] || 'Farmer Name';
+            document.getElementById('col-crop').innerText = translations[lang]['col-crop'] || 'Type of Crop';
+            document.getElementById('col-quantity').innerText = translations[lang]['col-quantity'] || 'Quantity(per bag)';
+            document.getElementById('col-price').innerText = translations[lang]['col-price'] || 'Expected Price';
+            document.getElementById('col-experience').innerText = translations[lang]['col-experience'] || 'Experience';
+            document.getElementById('col-adhar').innerText = translations[lang]['col-adhar'] || 'Aadhar Number';
+            document.getElementById('col-katha').innerText = translations[lang]['col-katha'] || '1B Katha Number';
+            document.getElementById('col-contact').innerText = translations[lang]['col-contact'] || 'Contact Number';
+            document.getElementById('col-bank').innerText = translations[lang]['col-bank'] || 'Bank Account Number';
+            document.getElementById('col-ifsc').innerText = translations[lang]['col-ifsc'] || 'IFSC Code';
+        }
+
+        document.getElementById('language-selector').addEventListener('change', function() {
+            translatePage(this.value);
+        });
+
+        // Initialize with default language
+        window.onload = function() {
+            translatePage(document.getElementById('language-selector').value);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Insights - Farmer & Retailer Portal</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        .insights-header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .insights-header h1 {
+            margin: 0;
+        }
+
+        .insights-container {
+            padding: 30px;
+        }
+
+        .real-time-demand, .price-variations, .futuristic-demand {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        .price-table th, .price-table td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        .price-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .price-table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .price-table td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+        }
+
+        .future-predictions-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .future-predictions-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .language-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .language-selector {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="insights-header">
+        <h1 id="insights-header-title">Market Insights</h1>
+        <p id="insights-header-description">Your real-time data hub for crop demand, price trends, and future market forecasts.</p>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="container">
+        <div class="language-container">
+            <label for="language-selector" class="form-label">Select Language:</label>
+            <select id="language-selector" class="form-select language-selector">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Insights Content -->
+    <div class="insights-container">
+
+        <!-- Real-Time Crop Demand Section -->
+        <div class="real-time-demand">
+            <h2 class="section-title" id="real-time-demand-title">Real-Time Crop Demand</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="cropSelection" class="form-label" id="select-crop-label">Select Crop</label>
+                    <select class="form-select" id="cropSelection">
+                        <option value="paddy">Paddy</option>
+                        <option value="maize">Maize</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="corn">Corn</option>
+                        <option value="onion">Onion</option>
+                        <option value="nut_seeds">Nut & Seeds</option>
+                    </select>
+                </div>
+
+                <div class="col-md-8">
+                    <h5 class="mt-4" id="current-demand-title">Current Demand: <span id="currentDemand">High</span></h5>
+                    <p id="real-time-demand-text">Based on the latest data, <strong>Paddy</strong> is currently in high demand in regions like Vizag and Guntur.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Price Variations Section -->
+        <div class="price-variations">
+            <h2 class="section-title" id="price-variations-title">Price Variations in the Market</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th id="crop-column">Crop</th>
+                        <th id="current-price-column">Current Price (per kg)</th>
+                        <th id="last-week-column">Last Week</th>
+                        <th id="percent-change-column">% Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Paddy</td>
+                        <td>₹35</td>
+                        <td>₹32</td>
+                        <td>+9.37%</td>
+                    </tr>
+                    <tr>
+                        <td>Maize</td>
+                        <td>₹28</td>
+                        <td>₹30</td>
+                        <td>-6.67%</td>
+                    </tr>
+                    <tr>
+                        <td>Wheat</td>
+                        <td>₹40</td>
+                        <td>₹38</td>
+                        <td>+5.26%</td>
+                    </tr>
+                    <tr>
+                        <td>Tomato</td>
+                        <td>₹50</td>
+                        <td>₹60</td>
+                        <td>-16.67%</td>
+                    </tr>
+                    <tr>
+                        <td>Corn</td>
+                        <td>₹22</td>
+                        <td>₹20</td>
+                        <td>+10%</td>
+                    </tr>
+                    <tr>
+                        <td>Onion</td>
+                        <td>₹25</td>
+                        <td>₹22</td>
+                        <td>+13.64%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Futuristic Demand Prediction Section -->
+        <div class="futuristic-demand">
+            <h2 class="section-title" id="futuristic-demand-title">Futuristic Crop Demand Predictions</h2>
+            <p id="futuristic-demand-text">Retailers can use this data to understand future market trends and prepare accordingly.</p>
+
+            <div class="chart-container" id="demandChart">
+                <!-- You can use a charting library like Chart.js or Google Charts here -->
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <h4 class="mt-4" id="predictions-title">Predictions for Selected Crop</h4>
+            <ul class="future-predictions-list">
+                <li><strong>Paddy</strong> - Expected to see a 15% increase in demand during the next harvest season.</li>
+                <li><strong>Maize</strong> - Market demand will remain stable, but prices may fluctuate slightly.</li>
+                <li><strong>Wheat</strong> - Demand expected to rise by 10% over the next quarter due to higher consumption.</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <p class="footer-text" id="footer-text">© 2024 Farmer & Retailer Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript and Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart.js Example: Demand Predictions Chart -->
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Paddy',
+                    data: [15, 25, 35, 45, 55, 65, 75],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }, {
+                    label: 'Maize',
+                    data: [10, 20, 30, 40, 50, 60, 70],
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Translations for different languages
+        const translations = {
+            en: {
+                'insights-header-title': 'Market Insights',
+                'insights-header-description': 'Your real-time data hub for crop demand, price trends, and future market forecasts.',
+                'real-time-demand-title': 'Real-Time Crop Demand',
+                'select-crop-label': 'Select Crop',
+                'current-demand-title': 'Current Demand: <span id="currentDemand">High</span>',
+                'real-time-demand-text': 'Based on the latest data, <strong>Paddy</strong> is currently in high demand in regions like Vizag and Guntur.',
+                'price-variations-title': 'Price Variations in the Market',
+                'crop-column': 'Crop',
+                'current-price-column': 'Current Price (per kg)',
+                'last-week-column': 'Last Week',
+                'percent-change-column': '% Change',
+                'futuristic-demand-title': 'Futuristic Crop Demand Predictions',
+                'futuristic-demand-text': 'Retailers can use this data to understand future market trends and prepare accordingly.',
+                'predictions-title': 'Predictions for Selected Crop',
+                'footer-text': '© 2024 Farmer & Retailer Portal. All rights reserved.'
+            },
+            hi: {
+                'insights-header-title': 'बाजार की जानकारी',
+                'insights-header-description': 'आपका वास्तविक समय डेटा हब फसल की मांग, मूल्य प्रवृत्तियों और भविष्य के बाजार की भविष्यवाणियों के लिए।',
+                'real-time-demand-title': 'वास्तविक समय फसल की मांग',
+                'select-crop-label': 'फसल चुनें',
+                'current-demand-title': 'वर्तमान मांग: <span id="currentDemand">उच्च</span>',
+                'real-time-demand-text': 'हाल के डेटा के आधार पर, <strong>पैडी</strong> वर्तमान में विजाग और गुंटूर जैसे क्षेत्रों में उच्च मांग में है।',
+                'price-variations-title': 'बाजार में मूल्य भिन्नताएं',
+                'crop-column': 'फसल',
+                'current-price-column': 'वर्तमान मूल्य (प्रति किलोग्राम)',
+                'last-week-column': 'पिछले सप्ताह',
+                'percent-change-column': '% परिवर्तन',
+                'futuristic-demand-title': 'भविष्य की फसल की मांग की भविष्यवाणियाँ',
+                'futuristic-demand-text': 'खुदरा विक्रेता इस डेटा का उपयोग भविष्य की बाजार प्रवृत्तियों को समझने और तदनुसार तैयारी करने के लिए कर सकते हैं।',
+                'predictions-title': 'चयनित फसल के लिए भविष्यवाणियाँ',
+                'footer-text': '© 2024 किसान और खुदरा विक्रेता पोर्टल। सर्वाधिकार सुरक्षित।'
+            },
+            te: {
+                'insights-header-title': 'మార్కెట్ ఇన్సైట్స్',
+                'insights-header-description': 'మీరు నాటి డేటా కేంద్రం పంట డిమాండ్, ధరల ట్రెండ్స్ మరియు భవిష్యత్ మార్కెట్ అంచనాలకు.',
+                'real-time-demand-title': 'వాస్తవ కాలపు పంట డిమాండ్',
+                'select-crop-label': 'పంట ఎంచుకోండి',
+                'current-demand-title': 'ప్రస్తుత డిమాండ్: <span id="currentDemand">ఉన్నత</span>',
+                'real-time-demand-text': 'ఇటీవల డేటా ఆధారంగా, <strong>ప్యాడీ</strong> ప్రస్తుతం విజగ్ మరియు గుంటూరు వంటి ప్రాంతాల్లో అధిక డిమాండ్‌లో ఉంది.',
+                'price-variations-title': 'మార్కెట్‌లో ధర మార్పులు',
+                'crop-column': 'పంట',
+                'current-price-column': 'ప్రస్తుతం ధర (ప్రతి కిలో)',
+                'last-week-column': 'చివరి వారము',
+                'percent-change-column': '% మార్పు',
+                'futuristic-demand-title': 'భవిష్యత్తు పంట డిమాండ్ అంచనాలు',
+                'futuristic-demand-text': 'అదనపు వ్యాపారులు ఈ డేటాను ఉపయోగించి భవిష్యత్తు మార్కెట్ ధోరణులను అర్థం చేసుకోవచ్చు మరియు అనుకూలంగా సిద్ధం కావచ్చు.',
+                'predictions-title': 'ఎంచుకున్న పంట కోసం అంచనాలు',
+                'footer-text': '© 2024 రైతు & రిటైలర్ పోర్టల్. అందరు హక్కులు సంరక్షించబడ్డాయి.'
+            }
+        };
+
+        function translatePage(lang) {
+            const translation = translations[lang] || translations['en']; // Default to English if language not found
+            document.getElementById('insights-header-title').innerText = translation['insights-header-title'];
+            document.getElementById('insights-header-description').innerText = translation['insights-header-description'];
+            document.getElementById('real-time-demand-title').innerText = translation['real-time-demand-title'];
+            document.getElementById('select-crop-label').innerText = translation['select-crop-label'];
+            document.getElementById('current-demand-title').innerHTML = translation['current-demand-title'];
+            document.getElementById('real-time-demand-text').innerHTML = translation['real-time-demand-text'];
+            document.getElementById('price-variations-title').innerText = translation['price-variations-title'];
+            document.getElementById('crop-column').innerText = translation['crop-column'];
+            document.getElementById('current-price-column').innerText = translation['current-price-column'];
+            document.getElementById('last-week-column').innerText = translation['last-week-column'];
+            document.getElementById('percent-change-column').innerText = translation['percent-change-column'];
+            document.getElementById('futuristic-demand-title').innerText = translation['futuristic-demand-title'];
+            document.getElementById('futuristic-demand-text').innerText = translation['futuristic-demand-text'];
+            document.getElementById('predictions-title').innerText = translation['predictions-title'];
+            document.getElementById('footer-text').innerText = translation['footer-text'];
+        }
+
+        document.getElementById('language-selector').addEventListener('change', function() {
+            translatePage(this.value);
+        });
+
+        // Initialize with default language
+        window.onload = function() {
+            translatePage(document.getElementById('language-selector').value);
+        };
+    </script>
+</body>
+</html>

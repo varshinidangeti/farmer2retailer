@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Insurance Form</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .language-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-selector {
+      width: 150px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Language Selector -->
+    <div class="language-container">
+      <label for="language-selector">Select Language:</label>
+      <select id="language-selector" class="form-select language-selector">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+      </select>
+    </div>
+
+    <h2 id="form-title">Crop Insurance Form</h2>
+    <form id="cropInsuranceForm">
+      <label for="full-name" id="full-name-label">Full Name:</label>
+      <input type="text" id="full-name" name="full-name" required><br>
+
+      <label for="adhar-file" id="adhar-file-label">Upload Aadhar File:</label>
+      <input type="file" id="adhar-file" name="adhar-file" accept=".pdf,.jpg,.jpeg,.png" required><br>
+
+      <label for="contact-number" id="contact-number-label">Contact Number:</label>
+      <input type="number" id="contact-number" name="contact-number" required><br>
+
+      <label for="crop-type" id="crop-type-label">Name of the crop:</label>
+      <input type="text" id="crop-type" name="crop-type" required><br>
+
+      <label for="acres" id="acres-label">No. of acres:</label>
+      <input type="number" id="acres" name="acres" required><br>
+
+      <label for="bank-account-number" id="bank-account-number-label">Bank Account Number:</label>
+      <input type="text" id="bank-account-number" name="bank-account-number" required><br>
+
+      <label for="declaration-form" id="declaration-form-label">Upload showing images for declaration:</label>
+      <input type="file" id="declaration-form" name="declaration-form" accept=".pdf" required><br>
+
+      <label for="document-1b" id="document-1b-label">Upload 1B Document:</label>
+      <input type="file" id="document-1b" name="document-1b" accept=".pdf" required><br>
+
+      <button type="button" onclick="generatePDF()" id="generate-pdf-btn">Generate PDF</button>
+      <button type="button" onclick="downloadPDF()" id="download-pdf-btn">Download PDF</button>
+    </form>
+  </div>
+
+  <!-- Include jsPDF library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
+  <script>
+    // Translations for different languages
+    const translations = {
+      en: {
+        'form-title': 'Crop Insurance Form',
+        'full-name-label': 'Full Name:',
+        'adhar-file-label': 'Upload Aadhar File:',
+        'contact-number-label': 'Contact Number:',
+        'crop-type-label': 'Name of the crop:',
+        'acres-label': 'No. of acres:',
+        'bank-account-number-label': 'Bank Account Number:',
+        'declaration-form-label': 'Upload showing images for declaration:',
+        'document-1b-label': 'Upload 1B Document:',
+        'generate-pdf-btn': 'Generate PDF',
+        'download-pdf-btn': 'Download PDF'
+      },
+      hi: {
+        'form-title': 'फसल बीमा फॉर्म',
+        'full-name-label': 'पूरा नाम:',
+        'adhar-file-label': 'आधार फ़ाइल अपलोड करें:',
+        'contact-number-label': 'संपर्क नंबर:',
+        'crop-type-label': 'फसल का नाम:',
+        'acres-label': 'एकड़ की संख्या:',
+        'bank-account-number-label': 'बैंक खाता संख्या:',
+        'declaration-form-label': 'घोषणा के लिए छवियाँ अपलोड करें:',
+        'document-1b-label': '1B दस्तावेज़ अपलोड करें:',
+        'generate-pdf-btn': 'PDF बनाएं',
+        'download-pdf-btn': 'PDF डाउनलोड करें'
+      },
+      te: {
+        'form-title': 'మా పంట బీమా ఫారం',
+        'full-name-label': 'పూర్తి పేరు:',
+        'adhar-file-label': 'ఆధార్ ఫైల్ అప్లోడ్ చేయండి:',
+        'contact-number-label': 'సంప్రదింపు సంఖ్య:',
+        'crop-type-label': 'పంట పేరు:',
+        'acres-label': 'ఎకరాల సంఖ్య:',
+        'bank-account-number-label': 'బ్యాంక్ అకౌంట్ నంబర్:',
+        'declaration-form-label': 'ఘోషణ కోసం చిత్రాలను అప్లోడ్ చేయండి:',
+        'document-1b-label': '1B డాక్యుమెంట్ అప్లోడ్ చేయండి:',
+        'generate-pdf-btn': 'PDF రూపొందించండి',
+        'download-pdf-btn': 'PDF డౌన్లోడ్ చేయండి'
+      }
+    };
+
+    // Function to translate the page
+    function translatePage(lang) {
+      document.getElementById('form-title').innerText = translations[lang]['form-title'] || 'Crop Insurance Form';
+      document.getElementById('full-name-label').innerText = translations[lang]['full-name-label'] || 'Full Name:';
+      document.getElementById('adhar-file-label').innerText = translations[lang]['adhar-file-label'] || 'Upload Aadhar File:';
+      document.getElementById('contact-number-label').innerText = translations[lang]['contact-number-label'] || 'Contact Number:';
+      document.getElementById('crop-type-label').innerText = translations[lang]['crop-type-label'] || 'Name of the crop:';
+      document.getElementById('acres-label').innerText = translations[lang]['acres-label'] || 'No. of acres:';
+      document.getElementById('bank-account-number-label').innerText = translations[lang]['bank-account-number-label'] || 'Bank Account Number:';
+      document.getElementById('declaration-form-label').innerText = translations[lang]['declaration-form-label'] || 'Upload showing images for declaration:';
+      document.getElementById('document-1b-label').innerText = translations[lang]['document-1b-label'] || 'Upload 1B Document:';
+      document.getElementById('generate-pdf-btn').innerText = translations[lang]['generate-pdf-btn'] || 'Generate PDF';
+      document.getElementById('download-pdf-btn').innerText = translations[lang]['download-pdf-btn'] || 'Download PDF';
+    }
+
+    // Handle language change
+    document.getElementById('language-selector').addEventListener('change', (event) => {
+      translatePage(event.target.value);
+    });
+
+    let pdfBlobUrl = '';
+
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Get form values
+      const fullName = document.getElementById('full-name').value;
+      const bankAccountNumber = document.getElementById('bank-account-number').value;
+
+      // Add form details to the PDF
+      doc.text(`Full Name: ${fullName}`, 10, 10);
+      doc.text(`Bank Account Number: ${bankAccountNumber}`, 10, 20);
+
+      // Add placeholder text for file uploads
+      doc.text('Aadhar File: [File not included]', 10, 30);
+      doc.text('Declaration Form PDF: [File not included]', 10, 40);
+      doc.text('1B Document: [File not included]', 10, 50);
+
+      // Generate PDF Blob
+      const pdfBlob = doc.output('blob');
+      pdfBlobUrl = URL.createObjectURL(pdfBlob);
+
+      alert('PDF has been generated. You can now download it.');
+    }
+
+    function downloadPDF() {
+      if (pdfBlobUrl) {
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute('href', pdfBlobUrl);
+        downloadAnchorNode.setAttribute('download', 'Crop_Insurance_Details.pdf');
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+      } else {
+        alert('Please generate the PDF first.');
+      }
+    }
+  </script>
+</body>
+</html>

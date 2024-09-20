@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Retailer Connect</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .detail-row {
+      margin-bottom: 15px;
+    }
+
+    .detail-row label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .detail-row span {
+      display: block;
+      margin-top: 5px;
+      color: #333;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .language-select {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="language-select">
+    <label for="languageSelect">Select Language:</label>
+    <select id="languageSelect" class="form-select w-auto mx-auto">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+      <option value="te">Telugu</option>
+    </select>
+  </div>
+  <div class="container">
+    <h2 id="pageTitle">Retailer Connect</h2>
+    <div class="detail-row">
+      <label for="retailer-name" id="retailerNameLabel">Retailer Name:</label>
+      <span id="retailer-name">D-Mart</span>
+    </div>
+
+    <div class="detail-row">
+      <label for="retailer-email" id="retailerEmailLabel">Email:</label>
+      <span id="retailer-email">contact@dmart.com</span>
+    </div>
+
+    <div class="detail-row">
+      <label for="retailer-phone" id="retailerPhoneLabel">Phone Number:</label>
+      <span id="retailer-phone">+91-9876543210</span>
+    </div>
+
+    <div class="detail-row">
+      <label for="retailer-address" id="retailerAddressLabel">Address:</label>
+      <span id="retailer-address">123 Main Street, City, State, 123456</span>
+    </div>
+
+    <div class="detail-row">
+      <label for="retailer-website" id="retailerWebsiteLabel">Website:</label>
+      <span id="retailer-website">http://www.dmart.com</span>
+    </div>
+
+    <button onclick="editDetails()" id="editDetailsBtn">Edit Details</button>
+  </div>
+
+  <script>
+    // Translation data
+    const translations = {
+      en: {
+        pageTitle: "Retailer Connect",
+        retailerNameLabel: "Retailer Name:",
+        retailerEmailLabel: "Email:",
+        retailerPhoneLabel: "Phone Number:",
+        retailerAddressLabel: "Address:",
+        retailerWebsiteLabel: "Website:",
+        editDetailsBtn: "Edit Details"
+      },
+      hi: {
+        pageTitle: "रिटेलर कनेक्ट",
+        retailerNameLabel: "रिटेलर का नाम:",
+        retailerEmailLabel: "ईमेल:",
+        retailerPhoneLabel: "फोन नंबर:",
+        retailerAddressLabel: "पता:",
+        retailerWebsiteLabel: "वेबसाइट:",
+        editDetailsBtn: "विवरण संपादित करें"
+      },
+      te: {
+        pageTitle: "రిటైలర్ కనెక్ట్",
+        retailerNameLabel: "రిటైలర్ పేరు:",
+        retailerEmailLabel: "ఇమెయిల్:",
+        retailerPhoneLabel: "ఫోన్ నంబర్:",
+        retailerAddressLabel: "చిరునామా:",
+        retailerWebsiteLabel: "వెబ్‌సైట్:",
+        editDetailsBtn: "వివరాలను సవరించండి"
+      }
+    };
+
+    const languageSelect = document.getElementById('languageSelect');
+    const pageTitle = document.getElementById('pageTitle');
+    const retailerNameLabel = document.getElementById('retailerNameLabel');
+    const retailerEmailLabel = document.getElementById('retailerEmailLabel');
+    const retailerPhoneLabel = document.getElementById('retailerPhoneLabel');
+    const retailerAddressLabel = document.getElementById('retailerAddressLabel');
+    const retailerWebsiteLabel = document.getElementById('retailerWebsiteLabel');
+    const editDetailsBtn = document.getElementById('editDetailsBtn');
+
+    function applyTranslations(language) {
+      const t = translations[language];
+      document.getElementById('pageTitle').textContent = t.pageTitle;
+      document.getElementById('retailerNameLabel').textContent = t.retailerNameLabel;
+      document.getElementById('retailerEmailLabel').textContent = t.retailerEmailLabel;
+      document.getElementById('retailerPhoneLabel').textContent = t.retailerPhoneLabel;
+      document.getElementById('retailerAddressLabel').textContent = t.retailerAddressLabel;
+      document.getElementById('retailerWebsiteLabel').textContent = t.retailerWebsiteLabel;
+      document.getElementById('editDetailsBtn').textContent = t.editDetailsBtn;
+    }
+
+    languageSelect.addEventListener('change', (event) => {
+      applyTranslations(event.target.value);
+    });
+
+    // Apply default language
+    applyTranslations('en');
+
+    function loadRetailerData() {
+      const retailerData = JSON.parse(localStorage.getItem('retailerData'));
+
+      if (retailerData) {
+        document.getElementById('retailer-name').textContent = retailerData.name;
+        document.getElementById('retailer-email').textContent = retailerData.email;
+        document.getElementById('retailer-phone').textContent = retailerData.phone;
+        document.getElementById('retailer-address').textContent = retailerData.address;
+        document.getElementById('retailer-website').textContent = retailerData.website;
+      }
+    }
+
+    function editDetails() {
+      window.location.href = 'edit-retailer.html';
+    }
+
+    // Load retailer data when the page loads
+    window.onload = loadRetailerData;
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Track Your Product</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .track-form {
+            margin-bottom: 20px;
+        }
+        .track-form input {
+            margin-right: 10px;
+        }
+        .language-select {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-select">
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect" class="form-select w-auto mx-auto">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <h2 id="pageTitle">Track Your Product</h2>
+
+        <div class="track-form">
+            <label for="billingId" class="form-label" id="billingIdLabel">Enter your Billing ID:</label>
+            <input type="text" id="billingId" class="form-control" placeholder="Billing ID" required>
+        </div>
+
+        <button class="btn btn-primary" onclick="trackProduct()" id="trackButton">Track Product</button>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                pageTitle: "Track Your Product",
+                billingIdLabel: "Enter your Billing ID:",
+                trackButton: "Track Product"
+            },
+            hi: {
+                pageTitle: "अपना उत्पाद ट्रैक करें",
+                billingIdLabel: "अपना बिलिंग आईडी दर्ज करें:",
+                trackButton: "उत्पाद ट्रैक करें"
+            },
+            te: {
+                pageTitle: "మీ ఉత్పత్తిని ట్రాక్ చేయండి",
+                billingIdLabel: "మీ బిల్లింగ్ ఐడీను నమోదు చేయండి:",
+                trackButton: "ఉత్పత్తిని ట్రాక్ చేయండి"
+            }
+        };
+
+        const languageSelect = document.getElementById('languageSelect');
+
+        function applyTranslations(language) {
+            const t = translations[language];
+            document.getElementById('pageTitle').textContent = t.pageTitle;
+            document.getElementById('billingIdLabel').textContent = t.billingIdLabel;
+            document.getElementById('trackButton').textContent = t.trackButton;
+        }
+
+        languageSelect.addEventListener('change', (event) => {
+            applyTranslations(event.target.value);
+        });
+
+        // Apply default language
+        applyTranslations('en');
+
+        function trackProduct() {
+            const billingId = document.getElementById('billingId').value.trim();
+
+            if (billingId === "") {
+                alert("Please enter a valid Billing ID");
+                return;
+            }
+
+            // Construct the URL for the tracking site, appending the billing ID as a parameter
+            const trackingUrl = `https://delhivery.com/track/${billingId}`;
+
+            // Open the tracking site in a new tab
+            window.open(trackingUrl, '_blank');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

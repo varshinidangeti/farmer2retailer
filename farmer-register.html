@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .language-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .language-selector {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <!-- Language Selector -->
+    <div class="language-container">
+        <label for="language-selector">Select Language:</label>
+        <select id="language-selector" class="form-select language-selector">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-success text-white text-center">
+            <span id="registration-title">Farmer Registration</span>
+        </div>
+        <div class="card-body">
+            <form id="farmerRegistrationForm">
+                <div class="form-group">
+                    <label for="fullName" id="fullName-label">Full Name</label>
+                    <input type="text" id="fullName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="username" id="username-label">Username</label>
+                    <input type="text" id="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" id="password-label">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" id="confirmPassword-label">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobileNumber" id="mobileNumber-label">Mobile Number</label>
+                    <input type="tel" id="mobileNumber" class="form-control" required>
+                </div>
+                
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="captcha">
+                    <label class="form-check-label" for="captcha" id="captcha-label">I'm not a robot</label>
+                </div>
+                <button type="submit" class="btn btn-success w-100" id="register-button">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Translations for different languages
+    const translations = {
+        en: {
+            'registration-title': 'Farmer Registration',
+            'fullName-label': 'Full Name',
+            'username-label': 'Username',
+            'password-label': 'Password',
+            'confirmPassword-label': 'Confirm Password',
+            'mobileNumber-label': 'Mobile Number',
+            'captcha-label': "I'm not a robot",
+            'register-button': 'Register'
+        },
+        hi: {
+            'registration-title': 'किसान पंजीकरण',
+            'fullName-label': 'पूरा नाम',
+            'username-label': 'उपयोगकर्ता नाम',
+            'password-label': 'पासवर्ड',
+            'confirmPassword-label': 'पासवर्ड की पुष्टि करें',
+            'mobileNumber-label': 'मोबाइल नंबर',
+            'captcha-label': 'मैं रोबोट नहीं हूँ',
+            'register-button': 'रजिस्टर'
+        },
+        te: {
+            'registration-title': 'రైతు నమోదు',
+            'fullName-label': 'పూర్తి పేరు',
+            'username-label': 'వాడుకరి పేరు',
+            'password-label': 'పాస్వర్డ్',
+            'confirmPassword-label': 'పాస్వర్డును ధృవీకరించండి',
+            'mobileNumber-label': 'మొబైల్ నంబర్',
+            'captcha-label': 'నేను రోబోట్ కాదు',
+            'register-button': 'నమోదు'
+        }
+    };
+
+    function translatePage(lang) {
+        document.getElementById('registration-title').innerText = translations[lang]['registration-title'] || 'Farmer Registration';
+        document.getElementById('fullName-label').innerText = translations[lang]['fullName-label'] || 'Full Name';
+        document.getElementById('username-label').innerText = translations[lang]['username-label'] || 'Username';
+        document.getElementById('password-label').innerText = translations[lang]['password-label'] || 'Password';
+        document.getElementById('confirmPassword-label').innerText = translations[lang]['confirmPassword-label'] || 'Confirm Password';
+        document.getElementById('mobileNumber-label').innerText = translations[lang]['mobileNumber-label'] || 'Mobile Number';
+        document.getElementById('captcha-label').innerText = translations[lang]['captcha-label'] || "I'm not a robot";
+        document.getElementById('register-button').innerText = translations[lang]['register-button'] || 'Register';
+    }
+
+    document.getElementById('language-selector').addEventListener('change', function() {
+        translatePage(this.value);
+    });
+
+    // Initialize with default language
+    window.onload = function() {
+        translatePage(document.getElementById('language-selector').value);
+    };
+
+    document.getElementById('farmerRegistrationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        // Redirect to home.html after form submission
+        window.location.href = 'home.html';
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

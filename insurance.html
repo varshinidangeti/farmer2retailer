@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Insurance Policy & Form</title>
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"], input[type="file"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #3498db;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+        }
+
+        .pdf-actions {
+            margin-top: 20px;
+        }
+
+        .language-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .language-selector {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="language-container">
+        <label for="language-selector" class="form-label">Select Language:</label>
+        <select id="language-selector" class="form-select language-selector">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+
+    <h1 id="form-title">Crop Insurance Policy</h1>
+    <h2 id="insurance-details-title">Insurance Details</h2>
+
+    <form id="insuranceForm">
+        <label for="fullName" id="fullName-label">Full Name</label>
+        <input type="text" id="fullName" placeholder="Enter your full name" required>
+        
+        <label for="provider" id="provider-label">Insurance Provider</label>
+        <input type="text" id="provider" placeholder="ICICI Lombard" required>
+
+        <label for="policyName" id="policyName-label">Policy Name</label>
+        <input type="text" id="policyName" placeholder="Weather-based Crop Insurance" required>
+
+        <label for="coverageType" id="coverageType-label">Coverage Type</label>
+        <input type="text" id="coverageType" placeholder="Weather-based crop insurance" required>
+
+        <label for="cropsCovered" id="cropsCovered-label">Crops Covered</label>
+        <input type="text" id="cropsCovered" placeholder="Wheat, Maize, Rice, Pulses, etc." required>
+
+        <label for="perilsCovered" id="perilsCovered-label">Perils Covered</label>
+        <input type="text" id="perilsCovered" placeholder="Rainfall, temperature fluctuation, flood, etc." required>
+
+        <label for="sumInsured" id="sumInsured-label">Sum Insured (per acre)</label>
+        <input type="number" id="sumInsured" placeholder="40000" required>
+
+        <label for="premiumRate" id="premiumRate-label">Premium Rate (%)</label>
+        <input type="number" id="premiumRate" placeholder="3-5%" required>
+
+        <label for="premiumAmount" id="premiumAmount-label">Insurance Premium (₹/acre/month)</label>
+        <input type="number" id="premiumAmount" placeholder="1400" required>
+
+        <label for="eligibility" id="eligibility-label">Eligibility</label>
+        <input type="text" id="eligibility" placeholder="All farmers growing commercial crops" required>
+
+        <label for="additionalBenefits" id="additionalBenefits-label">Additional Benefits</label>
+        <input type="text" id="additionalBenefits" placeholder="Post-harvest loss protection" required>
+
+        <label for="claimProcess" id="claimProcess-label">Claim Process</label>
+        <input type="text" id="claimProcess" placeholder="Triggered based on weather data" required>
+
+        <label for="adharFile" id="adharFile-label">Upload Aadhar File</label>
+        <input type="file" id="adharFile" accept=".pdf,.jpg,.jpeg,.png" required>
+
+        <label for="contactNumber" id="contactNumber-label">Contact Number</label>
+        <input type="number" id="contactNumber" placeholder="Enter your contact number" required>
+
+        <label for="cropType" id="cropType-label">Name of the crop</label>
+        <input type="text" id="cropType" placeholder="e.g., Wheat" required>
+
+        <label for="acres" id="acres-label">No. of acres</label>
+        <input type="number" id="acres" placeholder="Enter the number of acres" required>
+
+        <label for="bankAccountNumber" id="bankAccountNumber-label">Bank Account Number</label>
+        <input type="text" id="bankAccountNumber" placeholder="Enter your bank account number" required>
+
+        <label for="declarationForm" id="declarationForm-label">Upload Showing Images for Declaration</label>
+        <input type="file" id="declarationForm" accept=".pdf" required>
+
+        <label for="document1b" id="document1b-label">Upload 1B Document</label>
+        <input type="file" id="document1b" accept=".pdf" required>
+
+        <button type="button" onclick="submitInsurance()">Submit</button>
+        <div class="pdf-actions">
+            <button type="button" onclick="generatePDF()">Generate PDF</button>
+            <button type="button" onclick="downloadPDF()">Download PDF</button>
+        </div>
+    </form>
+
+    <div class="output" id="output"></div>
+</div>
+
+<!-- Include jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
+<script>
+    const translations = {
+        en: {
+            "form-title": "Crop Insurance Policy",
+            "insurance-details-title": "Insurance Details",
+            "fullName-label": "Full Name",
+            "provider-label": "Insurance Provider",
+            "policyName-label": "Policy Name",
+            "coverageType-label": "Coverage Type",
+            "cropsCovered-label": "Crops Covered",
+            "perilsCovered-label": "Perils Covered",
+            "sumInsured-label": "Sum Insured (per acre)",
+            "premiumRate-label": "Premium Rate (%)",
+            "premiumAmount-label": "Insurance Premium (₹/acre/month)",
+            "eligibility-label": "Eligibility",
+            "additionalBenefits-label": "Additional Benefits",
+            "claimProcess-label": "Claim Process",
+            "adharFile-label": "Upload Aadhar File",
+            "contactNumber-label": "Contact Number",
+            "cropType-label": "Name of the crop",
+            "acres-label": "No. of acres",
+            "bankAccountNumber-label": "Bank Account Number",
+            "declarationForm-label": "Upload Showing Images for Declaration",
+            "document1b-label": "Upload 1B Document"
+        },
+        hi: {
+            "form-title": "फसल बीमा पॉलिसी",
+            "insurance-details-title": "बीमा विवरण",
+            "fullName-label": "पूरा नाम",
+            "provider-label": "बीमा प्रदाता",
+            "policyName-label": "पॉलिसी का नाम",
+            "coverageType-label": "कवरेज प्रकार",
+            "cropsCovered-label": "कवरेज की गई फसलें",
+            "perilsCovered-label": "धमकियाँ कवर की गई",
+            "sumInsured-label": "बीमित राशि (प्रति एकड़)",
+            "premiumRate-label": "प्रीमियम दर (%)",
+            "premiumAmount-label": "बीमा प्रीमियम (₹/एकड़/महीना)",
+            "eligibility-label": "योग्यता",
+            "additionalBenefits-label": "अतिरिक्त लाभ",
+            "claimProcess-label": "क्लेम प्रक्रिया",
+            "adharFile-label": "आधार फ़ाइल अपलोड करें",
+            "contactNumber-label": "संपर्क नंबर",
+            "cropType-label": "फसल का नाम",
+            "acres-label": "एकड़ की संख्या",
+            "bankAccountNumber-label": "बैंक खाता नंबर",
+            "declarationForm-label": "घोषणा के लिए छवियाँ अपलोड करें",
+            "document1b-label": "1B दस्तावेज़ अपलोड करें"
+        },
+        te: {
+            "form-title": "పంట ఇన్సూరెన్స్ పాలసీ",
+            "insurance-details-title": "ఇన్సూరెన్స్ వివరాలు",
+            "fullName-label": "పూర్తి పేరు",
+            "provider-label": "ఇన్సూరెన్స్ ప్రొవైడర్",
+            "policyName-label": "పాలసీ పేరు",
+            "coverageType-label": "కవరేజ్ రకం",
+            "cropsCovered-label": "కవర్ చేసిన పంటలు",
+            "perilsCovered-label": "కవర్ చేసిన ప్రమాదాలు",
+            "sumInsured-label": "ఇన్స్యూర్డ్ అమెౌంట్ (ప్రతి ఎకరా)",
+            "premiumRate-label": "ప్రిమియం రేట్ (%)",
+            "premiumAmount-label": "ఇన్సూరెన్స్ ప్రీమియం (₹/ఎకరా/మాసం)",
+            "eligibility-label": "అర్హత",
+            "additionalBenefits-label": "అదనపు ప్రయోజనాలు",
+            "claimProcess-label": "క్లెయిమ్ ప్రక్రియ",
+            "adharFile-label": "ఆధార్ ఫైల్ అప్‌లోడ్ చేయండి",
+            "contactNumber-label": "సంప్రదింపు సంఖ్య",
+            "cropType-label": "పంట పేరు",
+            "acres-label": "ఎకరాల సంఖ్య",
+            "bankAccountNumber-label": "బ్యాంక్ ఖాతా నంబర్",
+            "declarationForm-label": "ప్రకటన కోసం చిత్రాలను అప్‌లోడ్ చేయండి",
+            "document1b-label": "1B డాక్యుమెంట్ అప్‌లోడ్ చేయండి"
+        }
+    };
+
+    function translatePage(lang) {
+        const translation = translations[lang] || translations['en']; // Default to English if language not found
+        document.getElementById('form-title').innerText = translation['form-title'];
+        document.getElementById('insurance-details-title').innerText = translation['insurance-details-title'];
+        document.getElementById('fullName-label').innerText = translation['fullName-label'];
+        document.getElementById('provider-label').innerText = translation['provider-label'];
+        document.getElementById('policyName-label').innerText = translation['policyName-label'];
+        document.getElementById('coverageType-label').innerText = translation['coverageType-label'];
+        document.getElementById('cropsCovered-label').innerText = translation['cropsCovered-label'];
+        document.getElementById('perilsCovered-label').innerText = translation['perilsCovered-label'];
+        document.getElementById('sumInsured-label').innerText = translation['sumInsured-label'];
+        document.getElementById('premiumRate-label').innerText = translation['premiumRate-label'];
+        document.getElementById('premiumAmount-label').innerText = translation['premiumAmount-label'];
+        document.getElementById('eligibility-label').innerText = translation['eligibility-label'];
+        document.getElementById('additionalBenefits-label').innerText = translation['additionalBenefits-label'];
+        document.getElementById('claimProcess-label').innerText = translation['claimProcess-label'];
+        document.getElementById('adharFile-label').innerText = translation['adharFile-label'];
+        document.getElementById('contactNumber-label').innerText = translation['contactNumber-label'];
+        document.getElementById('cropType-label').innerText = translation['cropType-label'];
+        document.getElementById('acres-label').innerText = translation['acres-label'];
+        document.getElementById('bankAccountNumber-label').innerText = translation['bankAccountNumber-label'];
+        document.getElementById('declarationForm-label').innerText = translation['declarationForm-label'];
+        document.getElementById('document1b-label').innerText = translation['document1b-label'];
+    }
+
+    document.getElementById('language-selector').addEventListener('change', function() {
+        translatePage(this.value);
+    });
+
+    // Initialize with default language
+    window.onload = function() {
+        translatePage(document.getElementById('language-selector').value);
+    };
+</script>
+</body>
+</html>

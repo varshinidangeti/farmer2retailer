@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Contract Page</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 10px 0 5px;
+    }
+
+    input[type="file"],
+    input[type="number"],
+    input[type="text"],
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button.cancel {
+      background-color: #dc3545;
+    }
+
+    .cancel-confirmation {
+      display: none;
+      color: #dc3545;
+      margin-top: 10px;
+    }
+
+    .generated-agreement {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .language-select {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-select label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .language-select select {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-select">
+      <label for="languageSelect">Select Language:</label>
+      <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+      </select>
+    </div>
+    <h2 id="formTitle">Make a Contract Session</h2>
+    <form id="contract-form">
+      <label for="quantity-required" id="quantityLabel">Quantity Required:</label>
+      <input type="number" id="quantity-required" name="quantity-required" required>
+
+      <label for="quality-expected" id="qualityLabel">Quality Expected:</label>
+      <select id="quality-expected" name="quality-expected" required>
+        <option value="A">Grade A</option>
+        <option value="B">Grade B</option>
+        <option value="C">Grade C</option>
+      </select>
+
+      <label for="time-period" id="timePeriodLabel">Time Period:</label>
+      <input type="text" id="time-period" name="time-period" required>
+
+      <label for="deadline" id="deadlineLabel">Deadline:</label>
+      <input type="date" id="deadline" name="deadline" required>
+
+      <label for="negotiated-price" id="priceLabel">Negotiated Price:</label>
+      <input type="number" id="negotiated-price" name="negotiated-price" step="0.01" required>
+
+      <label for="farmer-name" id="farmerNameLabel">Farmer's Name:</label>
+      <input type="text" id="farmer-name" name="farmer-name" required>
+
+      <label for="farmer-address" id="farmerAddressLabel">Farmer's Address:</label>
+      <input type="text" id="farmer-address" name="farmer-address" required>
+
+      <label for="retailer-name" id="retailerNameLabel">Retailer's Name:</label>
+      <input type="text" id="retailer-name" name="retailer-name" required>
+
+      <label for="retailer-address" id="retailerAddressLabel">Retailer's Address:</label>
+      <input type="text" id="retailer-address" name="retailer-address" required>
+
+      <label for="signature-file" id="signatureLabel">Upload Digital Signature:</label>
+      <input type="file" id="signature-file" name="signature-file" accept=".pdf" required>
+
+      <button type="submit" id="submitBtn">Submit Contract</button>
+      <button type="button" class="cancel" id="cancel-btn">Cancel Contract</button>
+
+      <div class="cancel-confirmation" id="cancel-confirmation">
+        Are you sure you want to cancel the contract? Cancellation is only possible within 7 days of submission.
+      </div>
+    </form>
+
+    <div class="generated-agreement" id="generated-agreement">
+      <h3 id="agreementTitle">Download Your Generated Contract</h3>
+      <button id="download-btn">Download Contract</button>
+    </div>
+  </div>
+  
+  <!-- jsPDF library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const { jsPDF } = window.jspdf;
+
+    // Translation data
+    const translations = {
+      en: {
+        pageTitle: "Contract Page",
+        formTitle: "Make a Contract Session",
+        quantityLabel: "Quantity Required:",
+        qualityLabel: "Quality Expected:",
+        timePeriodLabel: "Time Period:",
+        deadlineLabel: "Deadline:",
+        priceLabel: "Negotiated Price:",
+        farmerNameLabel: "Farmer's Name:",
+        farmerAddressLabel: "Farmer's Address:",
+        retailerNameLabel: "Retailer's Name:",
+        retailerAddressLabel: "Retailer's Address:",
+        signatureLabel: "Upload Digital Signature:",
+        submitBtn: "Submit Contract",
+        cancelBtn: "Cancel Contract",
+        cancelConfirmation: "Are you sure you want to cancel the contract? Cancellation is only possible within 7 days of submission.",
+        agreementTitle: "Download Your Generated Contract",
+      },
+      hi: {
+        pageTitle: "ठेका पृष्ठ",
+        formTitle: "एक ठेका सत्र बनाएं",
+        quantityLabel: "आवश्यक मात्रा:",
+        qualityLabel: "उम्मीद की गुणवत्ता:",
+        timePeriodLabel: "समय अवधि:",
+        deadlineLabel: "अंतिम तिथि:",
+        priceLabel: "मोलभाव की गई कीमत:",
+        farmerNameLabel: "किसान का नाम:",
+        farmerAddressLabel: "किसान का पता:",
+        retailerNameLabel: "रिटेलर का नाम:",
+        retailerAddressLabel: "रिटेलर का पता:",
+        signatureLabel: "डिजिटल सिग्नेचर अपलोड करें:",
+        submitBtn: "ठेका सबमिट करें",
+        cancelBtn: "ठेका रद्द करें",
+        cancelConfirmation: "क्या आप वाकई ठेका रद्द करना चाहते हैं? रद्दीकरण केवल सबमिशन के 7 दिनों के भीतर संभव है।",
+        agreementTitle: "डाउनलोड करें आपका जनरेट किया गया ठेका",
+      },
+      te: {
+        pageTitle: "కాంట్రాక్ట్ పేజీ",
+        formTitle: "ఒక కాంట్రాక్ట్ సెషన్ తయారుచేయండి",
+        quantityLabel: "అవసరమైన పరిమాణం:",
+        qualityLabel: "ఎవరి క్వాలిటీ ఆశించబడింది:",
+        timePeriodLabel: "సమయ వ్యవధి:",
+        deadlineLabel: "ముహూర్తం:",
+        priceLabel: "సంబంధిత ధర:",
+        farmerNameLabel: "రైతు పేరు:",
+        farmerAddressLabel: "రైతు చిరునామా:",
+        retailerNameLabel: "రిటైలర్ పేరు:",
+        retailerAddressLabel: "రిటైలర్ చిరునామా:",
+        signatureLabel: "డిజిటల్ సిగ్నేచర్ అప్లోడ్ చేయండి:",
+        submitBtn: "కాంట్రాక్ట్ సమర్పించండి",
+        cancelBtn: "కాంట్రాక్ట్ రద్దు చేయండి",
+        cancelConfirmation: "మీరు వాస్తవంగా కాంట్రాక్ట్ రద్దు చేయాలా? రద్దు చేయడం అనేది సమర్పణ తర్వాత 7 రోజులు మాత్రమే సాధ్యమే.",
+        agreementTitle: "మీ జనరేట్ చేసిన కాంట్రాక్ట్ డౌన్లోడ్ చేయండి",
+      }
+    };
+
+    const form = document.getElementById('contract-form');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const cancelConfirmation = document.getElementById('cancel-confirmation');
+    const generatedAgreement = document.getElementById('generated-agreement');
+    const downloadBtn = document.getElementById('download-btn');
+    const languageSelect = document.getElementById('languageSelect');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent default form submission
+    
+      // Generate and display the PDF contract agreement
+      generatePDF();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      // Display cancellation confirmation message
+      cancelConfirmation.style.display = 'block';
+      
+      // Optional: Implement a cancellation prompt or confirmation logic
+      // For example, you might ask for confirmation before actually cancelling
+    });
+
+    function generatePDF() {
+      // Gather form data
+      const quantity = document.getElementById('quantity-required').value;
+      const quality = document.getElementById('quality-expected').value;
+      const timePeriod = document.getElementById('time-period').value;
+      const deadline = document.getElementById('deadline').value;
+      const price = document.getElementById('negotiated-price').value;
+      const farmerName = document.getElementById('farmer-name').value;
+      const farmerAddress = document.getElementById('farmer-address').value;
+      const retailerName = document.getElementById('retailer-name').value;
+      const retailerAddress = document.getElementById('retailer-address').value;
+
+      // Create a new jsPDF document
+      const doc = new jsPDF();
+
+      // Set font size
+      doc.setFontSize(12);
+
+      // Add text to the PDF
+      doc.text("Contract Farming Agreement", 10, 10);
+      doc.text(`Farmer:`, 10, 20);
+      doc.text(`Name: ${farmerName}`, 10, 30);
+      doc.text(`Address: ${farmerAddress}`, 10, 40);
+      doc.text(`Retailer:`, 10, 50);
+      doc.text(`Name: ${retailerName}`, 10, 60);
+      doc.text(`Address: ${retailerAddress}`, 10, 70);
+      doc.text(`Quantity Required: ${quantity}`, 10, 80);
+      doc.text(`Quality Expected: Grade ${quality}`, 10, 90);
+      doc.text(`Time Period: ${timePeriod}`, 10, 100);
+      doc.text(`Deadline: ${deadline}`, 10, 110);
+      doc.text(`Negotiated Price: ${price}`, 10, 120);
+      doc.text(`Digital Signature: [Uploaded PDF]`, 10, 130);
+      
+      // Add terms & conditions
+      const terms = `
+        NOW, THEREFORE, the parties hereto agree as follows:
+        1. Supply and Purchase of Produce
+        - The Farmer agrees to grow and supply the agreed-upon Produce to the Retailer in accordance with the quality specifications outlined in this Agreement.
+        - The Retailer agrees to purchase the Produce from the Farmer, provided the quality of the Produce meets the specifications for Grade A produce.
+        2. Quality Grades and Price Adjustments
+        - If the Farmer is unable to supply Produce that meets Grade A quality, the Retailer may still purchase the Produce at a reduced price if it falls under Grade B or Grade C quality.
+        - Grade A: Full price as agreed.
+        - Grade B: [Percentage]% price reduction.
+        - Grade C: [Percentage]% price reduction.
+        3. Inspection of Produce
+        - The Retailer will inspect the quality of the Produce upon delivery. If the Produce does not meet the agreed-upon quality standard (Grade A), the Retailer may either:
+        - Reject the Produce, or
+        - Purchase the Produce under Grade B or Grade C, with the corresponding price adjustments.
+        4. Cancellation of the Agreement by Farmer
+        - The Farmer has the right to cancel the contract within 7 (seven) days from the date of signing this Agreement without incurring any penalties or liabilities.
+        - Cancellation must be communicated in writing to the Retailer within the 7-day period.
+        5. Delivery Schedule and Quantity
+        - The Farmer agrees to deliver the Produce to the Retailer on the following schedule:
+        Delivery Date: [Insert Delivery Date]
+        Delivery Location: [Insert Delivery Location]
+        Quantity: [Insert Quantity]
+        6. Payment Terms
+        - The Retailer agrees to pay the Farmer within [Insert Payment Terms] after the delivery of the Produce and the inspection of its quality.
+        - Payment will be made via [Payment Method] to the Farmer's bank account provided below:
+        Bank Name: [Insert Bank Name]
+        Account Number: [Insert Account Number]
+        7. Force Majeure
+        - Neither party will be liable for any failure to perform its obligations under this Agreement due to unforeseen events beyond their control, such as natural disasters, war, or pandemics.
+        8. Dispute Resolution
+        - Any disputes arising from this Agreement shall be resolved amicably through mutual discussions. If no resolution is reached, the matter will be referred to arbitration in accordance with the applicable laws.
+        9. Governing Law
+        - This Agreement shall be governed by and construed in accordance with the laws of [Applicable Jurisdiction].
+        10. Entire Agreement
+        - This Agreement constitutes the entire understanding between the parties and supersedes all prior discussions, agreements, or understandings of any kind.
+        IN WITNESS WHEREOF, the parties hereto have executed this Agreement on the date first above
+      `;
+      doc.text(terms, 10, 140, { maxWidth: 9000 });
+
+      // Create a Blob URL and set it as href for the download button
+      const pdfUrl = doc.output('bloburl');
+      downloadBtn.onclick = () => {
+        window.open(pdfUrl);
+      };
+
+      // Show the download button
+      generatedAgreement.style.display = 'block';
+      
+      // Optionally, reset the form
+      form.reset();
+    }
+
+    function applyTranslations(language) {
+      const t = translations[language];
+      document.getElementById('pageTitle').textContent = t.pageTitle;
+      document.getElementById('formTitle').textContent = t.formTitle;
+      document.getElementById('quantityLabel').textContent = t.quantityLabel;
+      document.getElementById('qualityLabel').textContent = t.qualityLabel;
+      document.getElementById('timePeriodLabel').textContent = t.timePeriodLabel;
+      document.getElementById('deadlineLabel').textContent = t.deadlineLabel;
+      document.getElementById('priceLabel').textContent = t.priceLabel;
+      document.getElementById('farmerNameLabel').textContent = t.farmerNameLabel;
+      document.getElementById('farmerAddressLabel').textContent = t.farmerAddressLabel;
+      document.getElementById('retailerNameLabel').textContent = t.retailerNameLabel;
+      document.getElementById('retailerAddressLabel').textContent = t.retailerAddressLabel;
+      document.getElementById('signatureLabel').textContent = t.signatureLabel;
+      document.getElementById('submitBtn').textContent = t.submitBtn;
+      document.getElementById('cancel-btn').textContent = t.cancelBtn;
+      document.getElementById('cancel-confirmation').textContent = t.cancelConfirmation;
+      document.getElementById('agreementTitle').textContent = t.agreementTitle;
+    }
+
+    languageSelect.addEventListener('change', (event) => {
+      applyTranslations(event.target.value);
+    });
+
+    // Apply default language
+    applyTranslations('en');
+
+  </script>
+</body>
+</html>

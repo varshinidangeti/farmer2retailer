@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retailer Product Requirements Form</title> 
+    <link href="styles.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        .form-group .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .form-group .checkbox-group label {
+            margin-right: 20px;
+        }
+        .form-group button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        .language-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-selector {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="language-container">
+            <label for="language-selector" class="form-label">Select Language:</label>
+            <select id="language-selector" class="language-selector">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+            </select>
+        </div>
+        
+        <h2 id="form-title">Retailer Product Requirements Form</h2>
+        <form action="/submit-requirements" method="post">
+            <div class="form-group">
+                <label for="retailerName" id="retailerName-label">Retailer Name:</label>
+                <input type="text" id="retailerName" name="retailerName" required>
+            </div>
+            <div class="form-group">
+                <label id="productCategory-label">Product Category:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="category" value="cereals" id="cereals"> <span id="cereals-label">Cereals</span></label>
+                    <label><input type="checkbox" name="category" value="pulses" id="pulses"> <span id="pulses-label">Pulses</span></label>
+                    <label><input type="checkbox" name="category" value="spices" id="spices"> <span id="spices-label">Spices</span></label>
+                    <label><input type="checkbox" name="category" value="nuts&seeds" id="nuts&seeds"> <span id="nuts-seeds-label">Nuts & Seeds</span></label>
+                    <label><input type="checkbox" name="category" value="vegetables" id="vegetables"> <span id="vegetables-label">Vegetables</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="productName" id="productName-label">Product Name:</label>
+                <select id="productName" name="productName" required>
+                    <option value="" disabled selected>Select Product</option>
+                    <optgroup label="Cereals">
+                        <option value="paddy" id="paddy-option">Paddy</option>
+                        <option value="maize" id="maize-option">Maize</option>
+                        <option value="wheat" id="wheat-option">Wheat</option>
+                    </optgroup>
+                    <optgroup label="Spices">
+                        <option value="chilli" id="chilli-option">Chilli</option>
+                        <option value="cardamom" id="cardamom-option">Cardamom</option>
+                    </optgroup>
+                    <optgroup label="Nuts & Seeds">
+                        <option value="ground_nuts" id="ground-nuts-option">Ground Nuts</option>
+                        <option value="badam" id="badam-option">Badam</option>
+                        <option value="cashew" id="cashew-option">Cashew</option>
+                        <option value="almonds" id="almonds-option">Almonds</option>
+                        <option value="walnuts" id="walnuts-option">Walnuts</option>
+                        <option value="pista" id="pista-option">Pista</option>
+                    </optgroup>
+                    <optgroup label="Pulses">
+                        <option value="lentils" id="lentils-option">Lentils</option>
+                        <option value="black_gram" id="black-gram-option">Black Gram</option>
+                        <option value="red_gram" id="red-gram-option">Red Gram</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="requiredQuantity" id="requiredQuantity-label">Required Quantity:</label>
+                <input type="number" id="requiredQuantity" name="requiredQuantity" required>
+            </div>
+            <div class="form-group">
+                <label for="units" id="units-label">Units:</label>
+                <select id="units" name="units" required>
+                    <option value="" disabled selected>Select Unit</option>
+                    <option value="kgs" id="kgs-option">Kgs</option>
+                    <option value="tons" id="tons-option">Tons</option>
+                    <option value="quintals" id="quintals-option">Quintals</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="frequencyOfDemand" id="frequencyOfDemand-label">Frequency of Demand:</label>
+                <select id="frequencyOfDemand" name="frequencyOfDemand" required>
+                    <option value="" disabled selected>Select Frequency</option>
+                    <option value="monthly" id="monthly-option">Monthly</option>
+                    <option value="bi-monthly" id="bi-monthly-option">Bi-Monthly</option>
+                    <option value="quarterly" id="quarterly-option">Quarterly</option>
+                    <option value="half-yearly" id="half-yearly-option">Half-Yearly</option>
+                    <option value="annually" id="annually-option">Annually</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="deadline" id="deadline-label">Deadline:</label>
+                <input type="date" id="deadline" name="deadline" required>
+            </div>
+            <div class="form-group">
+                <label for="minBuyingPrice" id="minBuyingPrice-label">Min Buying Price:</label>
+                <input type="number" id="minBuyingPrice" name="minBuyingPrice" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="location" id="location-label">Location:</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                "form-title": "Retailer Product Requirements Form",
+                "retailerName-label": "Retailer Name:",
+                "productCategory-label": "Product Category:",
+                "cereals-label": "Cereals",
+                "pulses-label": "Pulses",
+                "spices-label": "Spices",
+                "nuts-seeds-label": "Nuts & Seeds",
+                "vegetables-label": "Vegetables",
+                "productName-label": "Product Name:",
+                "requiredQuantity-label": "Required Quantity:",
+                "units-label": "Units:",
+                "frequencyOfDemand-label": "Frequency of Demand:",
+                "deadline-label": "Deadline:",
+                "minBuyingPrice-label": "Min Buying Price:",
+                "location-label": "Location:",
+                "submit-button": "Submit"
+            },
+            hi: {
+                "form-title": "रिटेलर उत्पाद आवश्यकताएँ फॉर्म",
+                "retailerName-label": "रिटेलर का नाम:",
+                "productCategory-label": "उत्पाद श्रेणी:",
+                "cereals-label": "अनाज",
+                "pulses-label": "दालें",
+                "spices-label": "मसाले",
+                "nuts-seeds-label": "मेवे और बीज",
+                "vegetables-label": "सब्जियाँ",
+                "productName-label": "उत्पाद का नाम:",
+                "requiredQuantity-label": "आवश्यक मात्रा:",
+                "units-label": "इकाइयाँ:",
+                "frequencyOfDemand-label": "मांग की आवृत्ति:",
+                "deadline-label": "समयसीमा:",
+                "minBuyingPrice-label": "न्यूनतम खरीद मूल्य:",
+                "location-label": "स्थान:",
+                "submit-button": "जमा करें"
+            },
+            te: {
+                "form-title": "రిటైలర్ ఉత్పత్తి అవసరాలు ఫారం",
+                "retailerName-label": "రిటైలర్ పేరు:",
+                "productCategory-label": "ఉత్పత్తి వర్గం:",
+                "cereals-label": "ధాన్యాలు",
+                "pulses-label": "పప్పుఉసిరులు",
+                "spices-label": "మసాలాలు",
+                "nuts-seeds-label": "తిండి & విత్తనాలు",
+                "vegetables-label": "కూరగాయలు",
+                "productName-label": "ఉత్పత్తి పేరు:",
+                "requiredQuantity-label": "ఆవశ్యకమైన పరిమాణం:",
+                "units-label": "ఇకైలు:",
+                "frequencyOfDemand-label": "అవసరతా తరచు:",
+                "deadline-label": "మేరయుడు:",
+                "minBuyingPrice-label": "కనిష్ట కొనుగోలు ధర:",
+                "location-label": "స్థలం:",
+                "submit-button": "సమర్పించండి"
+            }
+        };
+
+        document.getElementById('language-selector').addEventListener('change', function() {
+            translatePage(this.value);
+        });
+
+        function translatePage(language) {
+            const translation = translations[language];
+            
+            document.getElementById('form-title').innerText = translation['form-title'];
+            document.getElementById('retailerName-label').innerText = translation['retailerName-label'];
+            document.getElementById('productCategory-label').innerText = translation['productCategory-label'];
+            document.getElementById('cereals-label').innerText = translation['cereals-label'];
+            document.getElementById('pulses-label').innerText = translation['pulses-label'];
+            document.getElementById('spices-label').innerText = translation['spices-label'];
+            document.getElementById('nuts-seeds-label').innerText = translation['nuts-seeds-label'];
+            document.getElementById('vegetables-label').innerText = translation['vegetables-label'];
+            document.getElementById('productName-label').innerText = translation['productName-label'];
+            document.getElementById('requiredQuantity-label').innerText = translation['requiredQuantity-label'];
+            document.getElementById('units-label').innerText = translation['units-label'];
+            document.getElementById('frequencyOfDemand-label').innerText = translation['frequencyOfDemand-label'];
+            document.getElementById('deadline-label').innerText = translation['deadline-label'];
+            document.getElementById('minBuyingPrice-label').innerText = translation['minBuyingPrice-label'];
+            document.getElementById('location-label').innerText = translation['location-label'];
+            document.getElementById('submit-button').innerText = translation['submit-button'];
+        }
+
+        // Initialize with default language
+        window.onload = function() {
+            translatePage('en'); // Default to English
+        };
+    </script>
+</body>
+</html>

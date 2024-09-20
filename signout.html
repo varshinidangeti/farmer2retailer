@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Profile Actions</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .signout-button {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .remove-button {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .signout-button:hover,
+    .remove-button:hover {
+      opacity: 0.9;
+    }
+
+    .language-select {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="language-select">
+    <label for="languageSelect">Select Language:</label>
+    <select id="languageSelect" class="form-select w-auto mx-auto">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+      <option value="te">Telugu</option>
+    </select>
+  </div>
+  <div class="container">
+    <h2 id="pageTitle">Profile Actions</h2>
+    <p id="selectAction">Select an action from below:</p>
+    <div class="button-container">
+      <button class="signout-button" onclick="signOut()" id="signOutBtn">Sign Out</button>
+      <button class="remove-button" onclick="showRemoveAccountConfirmation()" id="removeAccountBtn">Remove Account</button>
+    </div>
+  </div>
+
+  <script>
+    // Translation data
+    const translations = {
+      en: {
+        pageTitle: "Profile Actions",
+        selectAction: "Select an action from below:",
+        signOutBtn: "Sign Out",
+        removeAccountBtn: "Remove Account"
+      },
+      hi: {
+        pageTitle: "प्रोफाइल क्रियाएँ",
+        selectAction: "नीचे से एक क्रिया चुनें:",
+        signOutBtn: "साइन आउट करें",
+        removeAccountBtn: "खाता हटाएँ"
+      },
+      te: {
+        pageTitle: "ప్రొఫైల్ చర్యలు",
+        selectAction: "క్రింద నుండి ఒక చర్యను ఎంపిక చేయండి:",
+        signOutBtn: "సైన్ అవుట్",
+        removeAccountBtn: "ఖాతా తొలగించండి"
+      }
+    };
+
+    const languageSelect = document.getElementById('languageSelect');
+    const pageTitle = document.getElementById('pageTitle');
+    const selectAction = document.getElementById('selectAction');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const removeAccountBtn = document.getElementById('removeAccountBtn');
+
+    function applyTranslations(language) {
+      const t = translations[language];
+      document.getElementById('pageTitle').textContent = t.pageTitle;
+      document.getElementById('selectAction').textContent = t.selectAction;
+      document.getElementById('signOutBtn').textContent = t.signOutBtn;
+      document.getElementById('removeAccountBtn').textContent = t.removeAccountBtn;
+    }
+
+    languageSelect.addEventListener('change', (event) => {
+      applyTranslations(event.target.value);
+    });
+
+    // Apply default language
+    applyTranslations('en');
+
+    function signOut() {
+      if (confirm(getTranslation('signOutConfirm'))) {
+        // Handle sign out logic here
+        // For example, clear session or local storage if necessary
+        alert(getTranslation('signOutSuccess'));
+        window.location.href = 'index.html'; // Redirect to home page or login page
+      }
+    }
+
+    function showRemoveAccountConfirmation() {
+      if (confirm(getTranslation('removeAccountConfirm'))) {
+        // Handle account removal logic here
+        // For example, make an API call to remove the account
+        alert(getTranslation('removeAccountSuccess'));
+        window.location.href = 'index.html'; // Redirect to home page or appropriate page after account removal
+      }
+    }
+
+    function getTranslation(key) {
+      const t = translations[languageSelect.value];
+      return t ? t[key] : translations['en'][key];
+    }
+  </script>
+</body>
+</html>

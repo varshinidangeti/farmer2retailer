@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Contracts</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    .view-contract-btn, .download-pdf-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+
+    .download-pdf-btn {
+      background-color: #28a745;
+    }
+
+    .language-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-selector {
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+  <div class="language-container">
+    <label for="language-selector" class="form-label">Select Language:</label>
+    <select id="language-selector" class="language-selector">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+      <option value="te">Telugu</option>
+    </select>
+  </div>
+
+  <div class="container">
+    <h2 id="page-title">My Contracts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th id="retailer-header">Retailer Name</th>
+          <th id="product-header">Product</th>
+          <th id="quantity-header">Quantity</th>
+          <th id="deadline-header">Deadline</th>
+          <th id="msp-header">Predetermined MSP</th>
+          <th id="actions-header">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>D-Mart</td>
+          <td>Rice</td>
+          <td>130-150 bags</td>
+          <td>6/5/2025</td>
+          <td>₹2350 per bag</td>
+          <td>
+            <button class="view-contract-btn" onclick="viewStatus('D-Mart', 'Rice', '130-150 bags', '6/5/2025', '₹2350 per bag')">View Status</button>
+            <button class="download-pdf-btn" onclick="downloadAgreementPDF('D-Mart', 'Rice', '130-150 bags', '6/5/2025', '₹2350 per bag')">Download Agreement</button>
+          </td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Include jsPDF library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
+  <script>
+    const translations = {
+      en: {
+        "page-title": "My Contracts",
+        "retailer-header": "Retailer Name",
+        "product-header": "Product",
+        "quantity-header": "Quantity",
+        "deadline-header": "Deadline",
+        "msp-header": "Predetermined MSP",
+        "actions-header": "Actions",
+        "view-status": "View Status",
+        "download-agreement": "Download Agreement",
+        "terms-conditions": [
+          "The retailer agrees to purchase the specified quantity at the predetermined MSP.",
+          "The farmer must deliver the crops before the deadline.",
+          "Any disputes will be resolved under local jurisdiction."
+        ]
+      },
+      hi: {
+        "page-title": "मेरे अनुबंध",
+        "retailer-header": "विक्रेता का नाम",
+        "product-header": "उत्पाद",
+        "quantity-header": "मात्रा",
+        "deadline-header": "अंतिम तिथि",
+        "msp-header": "पूर्व निर्धारित MSP",
+        "actions-header": "कार्य",
+        "view-status": "स्थिति देखें",
+        "download-agreement": "अनुबंध डाउनलोड करें",
+        "terms-conditions": [
+          "विक्रेता पूर्व निर्धारित MSP पर निर्दिष्ट मात्रा खरीदने पर सहमत है।",
+          "किसान को समय सीमा से पहले फसलें वितरित करनी होंगी।",
+          "कोई भी विवाद स्थानीय क्षेत्राधिकार के तहत हल किया जाएगा।"
+        ]
+      },
+      te: {
+        "page-title": "నా ఒప్పందాలు",
+        "retailer-header": "విక్రేత పేరు",
+        "product-header": "ఉత్పత్తి",
+        "quantity-header": "రేఖ",
+        "deadline-header": "డెడ్‌లైన్",
+        "msp-header": "ముందస్తు నిర్ణయించిన MSP",
+        "actions-header": "చర్యలు",
+        "view-status": "స్థితి చూడండి",
+        "download-agreement": "ఒప్పందాన్ని డౌన్లోడ్ చేయండి",
+        "terms-conditions": [
+          "విక్రేత ముందుగా నిర్ణయించిన MSP వద్ద నిర్దిష్ట పరిమాణాన్ని కొనుగోలు చేయటానికి అంగీకరించును.",
+          "వ్యాపారి డెడ్‌లైన్‌కు ముందే పంటను అందించాలి.",
+          "ఏ వాదనలు స్థానిక న్యాయవాదం ద్వారా పరిష్కరించబడతాయి."
+        ]
+      }
+    };
+
+    const languageSelector = document.getElementById('language-selector');
+
+    languageSelector.addEventListener('change', function() {
+      translatePage(this.value);
+    });
+
+    function translatePage(language) {
+      const translation = translations[language];
+      
+      document.getElementById('page-title').innerText = translation['page-title'];
+      document.getElementById('retailer-header').innerText = translation['retailer-header'];
+      document.getElementById('product-header').innerText = translation['product-header'];
+      document.getElementById('quantity-header').innerText = translation['quantity-header'];
+      document.getElementById('deadline-header').innerText = translation['deadline-header'];
+      document.getElementById('msp-header').innerText = translation['msp-header'];
+      document.getElementById('actions-header').innerText = translation['actions-header'];
+
+      const buttons = document.querySelectorAll('.view-contract-btn, .download-pdf-btn');
+      buttons[0].innerText = translation['view-status'];
+      buttons[1].innerText = translation['download-agreement'];
+    }
+
+    // Initialize with default language
+    window.onload = function() {
+      translatePage(languageSelector.value);
+    };
+
+    // Function to store contract details in localStorage and redirect to contract status page
+    function viewStatus(retailer, product, quantity, deadline, msp) {
+      const contractData = {
+        retailer,
+        product,
+        quantity,
+        deadline,
+        msp
+      };
+
+      // Store contract data in localStorage
+      localStorage.setItem('contractData', JSON.stringify(contractData));
+
+      // Redirect to contract_status.html
+      window.location.href = 'contract_status.html';
+    }
+
+    // Function to download the contract agreement as a PDF
+    function downloadAgreementPDF(retailer, product, quantity, deadline, msp) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Add the contract details to the PDF
+      doc.text("Contract Agreement", 105, 20, null, null, "center");
+      doc.text(`Retailer: ${retailer}`, 10, 30);
+      doc.text(`Product: ${product}`, 10, 40);
+      doc.text(`Quantity: ${quantity}`, 10, 50);
+      doc.text(`Deadline: ${deadline}`, 10, 60);
+      doc.text(`Predetermined MSP: ${msp}`, 10, 70);
+
+      doc.text("Terms and Conditions:", 10, 90);
+      translations[languageSelector.value]['terms-conditions'].forEach((condition, index) => {
+        doc.text(`- ${condition}`, 10, 100 + (index * 10));
+      });
+
+      // Generate the PDF and download it
+      doc.save(`Contract_Agreement_${retailer}_${product}.pdf`);
+    }
+  </script>
+</body>
+</html>

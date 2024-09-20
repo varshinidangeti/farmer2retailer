@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Page</title>
+  <link href="styles.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 10px 0 5px;
+    }
+
+    input[type="file"],
+    input[type="number"],
+    input[type="text"],
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button.cancel {
+      background-color: #dc3545;
+    }
+
+    .cancel-confirmation {
+      display: none;
+      color: #dc3545;
+      margin-top: 10px;
+    }
+
+    .generated-agreement {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .language-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .language-selector {
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+  <div class="language-container">
+    <label for="language-selector" class="form-label">Select Language:</label>
+    <select id="language-selector" class="form-select language-selector">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+      <option value="te">Telugu</option>
+    </select>
+  </div>
+
+  <div class="container">
+    <h2 id="page-title">Make a Contract Session</h2>
+    <form id="contract-form">
+      <label for="quantity-required" id="quantity-label">Quantity Required:</label>
+      <input type="number" id="quantity-required" name="quantity-required" required>
+
+      <label for="quality-expected" id="quality-label">Quality Expected:</label>
+      <select id="quality-expected" name="quality-expected" required>
+        <option value="A">Grade A</option>
+        <option value="B">Grade B</option>
+        <option value="C">Grade C</option>
+      </select>
+
+      <label for="time-period" id="time-period-label">Time Period:</label>
+      <input type="text" id="time-period" name="time-period" required>
+
+      <label for="deadline" id="deadline-label">Deadline:</label>
+      <input type="date" id="deadline" name="deadline" required>
+
+      <label for="negotiated-price" id="price-label">Negotiated Price:</label>
+      <input type="number" id="negotiated-price" name="negotiated-price" step="0.01" required>
+
+      <label for="signature-file" id="signature-label">Upload Digital Signature:</label>
+      <input type="file" id="signature-file" name="signature-file" accept=".pdf" required>
+
+      <button type="submit" id="submit-btn">Submit Contract</button>
+      <button type="button" class="cancel" id="cancel-btn">Cancel Contract</button>
+
+      <div class="cancel-confirmation" id="cancel-confirmation">
+        Are you sure you want to cancel the contract? Cancellation is only possible within 7 days of submission.
+      </div>
+    </form>
+
+    <div class="generated-agreement" id="generated-agreement">
+      <h3 id="agreement-title">Generated Contract Agreement</h3>
+      <p id="contract-text"></p>
+      <label for="upload-agreement" id="upload-label">Upload Generated Agreement:</label>
+      <input type="file" id="upload-agreement" name="upload-agreement" accept=".pdf">
+      <button type="button" id="upload-btn">Upload Agreement</button>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        "page-title": "Make a Contract Session",
+        "quantity-label": "Quantity Required:",
+        "quality-label": "Quality Expected:",
+        "time-period-label": "Time Period:",
+        "deadline-label": "Deadline:",
+        "price-label": "Negotiated Price:",
+        "signature-label": "Upload Digital Signature:",
+        "submit-btn": "Submit Contract",
+        "cancel-btn": "Cancel Contract",
+        "cancel-confirmation": "Are you sure you want to cancel the contract? Cancellation is only possible within 7 days of submission.",
+        "agreement-title": "Generated Contract Agreement",
+        "upload-label": "Upload Generated Agreement:"
+      },
+      hi: {
+        "page-title": "एक अनुबंध सत्र बनाएं",
+        "quantity-label": "आवश्यक मात्रा:",
+        "quality-label": "अपेक्षित गुणवत्ता:",
+        "time-period-label": "समय अवधि:",
+        "deadline-label": "समय सीमा:",
+        "price-label": "सहमति मूल्य:",
+        "signature-label": "डिजिटल हस्ताक्षर अपलोड करें:",
+        "submit-btn": "अनुबंध सबमिट करें",
+        "cancel-btn": "अनुबंध रद्द करें",
+        "cancel-confirmation": "क्या आप वाकई अनुबंध रद्द करना चाहते हैं? रद्दीकरण केवल सबमिशन के 7 दिनों के भीतर संभव है।",
+        "agreement-title": "जनरेटेड अनुबंध समझौता",
+        "upload-label": "जनरेटेड समझौता अपलोड करें:"
+      },
+      te: {
+        "page-title": "ఒక ఒప్పంద సదస్సు చేయండి",
+        "quantity-label": "అవసరమైన పరిమాణం:",
+        "quality-label": "అంచనా నాణ్యత:",
+        "time-period-label": "సమయ వ్యవధి:",
+        "deadline-label": "డెడ్‌లైన్:",
+        "price-label": "ఆసక్తికరమైన ధర:",
+        "signature-label": "డిజిటల్ సంతకం అప్లోడ్ చేయండి:",
+        "submit-btn": "ఒప్పందాన్ని సమర్పించండి",
+        "cancel-btn": "ఒప్పందాన్ని రద్దు చేయండి",
+        "cancel-confirmation": "మీరు వాస్తవంగా ఒప్పందాన్ని రద్దు చేయాలనుకుంటున్నారా? రద్దు కేవలం సమర్పణకు 7 రోజులు లోపల మాత్రమే సాధ్యమవుతుంది.",
+        "agreement-title": "సృష్టించిన ఒప్పందం",
+        "upload-label": "సృష్టించిన ఒప్పందాన్ని అప్లోడ్ చేయండి:"
+      }
+    };
+
+    const form = document.getElementById('contract-form');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const cancelConfirmation = document.getElementById('cancel-confirmation');
+    const generatedAgreement = document.getElementById('generated-agreement');
+    const contractText = document.getElementById('contract-text');
+    const uploadBtn = document.getElementById('upload-btn');
+    const uploadAgreement = document.getElementById('upload-agreement');
+    const languageSelector = document.getElementById('language-selector');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent default form submission
+      generateAgreement();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      // Display cancellation confirmation message
+      cancelConfirmation.style.display = 'block';
+      
+      // Optional: Implement a cancellation prompt or confirmation logic
+      // For example, you might ask for confirmation before actually cancelling
+    });
+
+    function generateAgreement() {
+      // Gather form data
+      const quantity = document.getElementById('quantity-required').value;
+      const quality = document.getElementById('quality-expected').value;
+      const timePeriod = document.getElementById('time-period').value;
+      const deadline = document.getElementById('deadline').value;
+      const price = document.getElementById('negotiated-price').value;
+
+      // Create contract text
+      const agreementText = `
+        <strong>Contract Agreement</strong><br><br>
+        <strong>Quantity Required:</strong> ${quantity}<br>
+        <strong>Quality Expected:</strong> Grade ${quality}<br>
+        <strong>Time Period:</strong> ${timePeriod}<br>
+        <strong>Deadline:</strong> ${deadline}<br>
+        <strong>Negotiated Price:</strong> ${price}<br>
+        <strong>Digital Signature:</strong> [Uploaded PDF]<br>
+      `;
+
+      // Display generated agreement
+      contractText.innerHTML = agreementText;
+      generatedAgreement.style.display = 'block';
+    }
+
+    uploadBtn.addEventListener('click', () => {
+      // Implement the logic to handle the uploaded generated file
+      alert('Agreement uploaded successfully!');
+      console.log('Uploaded file:', uploadAgreement.files[0]);
+    });
+
+    function translatePage(language) {
+      const translation = translations[language];
+      
+      document.getElementById('page-title').innerText = translation['page-title'];
+      document.getElementById('quantity-label').innerText = translation['quantity-label'];
+      document.getElementById('quality-label').innerText = translation['quality-label'];
+      document.getElementById('time-period-label').innerText = translation['time-period-label'];
+      document.getElementById('deadline-label').innerText = translation['deadline-label'];
+      document.getElementById('price-label').innerText = translation['price-label'];
+      document.getElementById('signature-label').innerText = translation['signature-label'];
+      document.getElementById('submit-btn').innerText = translation['submit-btn'];
+      document.getElementById('cancel-btn').innerText = translation['cancel-btn'];
+      document.getElementById('cancel-confirmation').innerText = translation['cancel-confirmation'];
+      document.getElementById('agreement-title').innerText = translation['agreement-title'];
+      document.getElementById('upload-label').innerText = translation['upload-label'];
+    }
+
+    languageSelector.addEventListener('change', function() {
+      translatePage(this.value);
+    });
+
+    // Initialize with default language
+    window.onload = function() {
+      translatePage(languageSelector.value);
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Basket Crop Request & Account Details</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main-content {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            margin-bottom: 30px;
+        }
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .language-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-selector {
+            width: 150px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-content">
+    <!-- Language Selector -->
+    <div class="language-container">
+        <label for="language-selector">Select Language:</label>
+        <select id="language-selector" class="form-select language-selector">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+
+    <!-- D-Mart Crop Request Form -->
+    <div class="container mt-5">
+        <h2 id="crop-form-title">Big Basket Crop Request Form</h2>
+        <form id="crop-form" class="row g-3">
+            <label for="location" class="form-label" data-translate-key="location">Location</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="crop" class="form-label" data-translate-key="crop-type">Select Crop Type</label>
+            <select id="crop" name="crop">
+                <option value="paddy">Paddy</option>
+                <option value="tomato">Tomato</option>
+                <option value="wheat">Wheat</option>
+                <option value="millets">Millets</option>
+                <option value="maize">Maize</option>
+                <option value="sugar">Sugar</option>
+            </select>
+
+            <label for="quantity" class="form-label" data-translate-key="quantity">Select Quantity</label>
+            <select id="quantity" name="quantity">
+                <option value="100-150">100-150</option>
+                <option value="1000-1500">1000-1500</option>
+                <option value="150-500">150-500</option>
+                <option value="300-400">300-400</option>
+                <option value="600-700">600-700</option>
+                <option value="800-900">800-900</option>
+            </select>
+        </form>
+    </div>
+
+    <!-- Account Details Form -->
+    <div class="container">
+        <h2 id="account-form-title">Account Details</h2>
+        <form id="account-form">
+            <label for="full-name" data-translate-key="full-name">Full Name:</label>
+            <input type="text" id="full-name" name="full-name" required>
+
+            <label for="adhar-number" data-translate-key="adhar-number">Aadhar Number:</label>
+            <input type="text" id="adhar-number" name="adhar-number" required>
+
+            <label for="contact-number" data-translate-key="contact-number">Contact Number:</label>
+            <input type="tel" id="contact-number" name="contact-number" required>
+
+            <label for="account-location" data-translate-key="account-location">Location:</label>
+            <input type="text" id="account-location" name="account-location" required>
+
+            <label for="ownership-status" data-translate-key="ownership-status">Ownership Status:</label>
+            <input type="text" id="ownership-status" name="ownership-status" required>
+
+            <label for="soil-type" data-translate-key="soil-type">Soil Type / Number of Acres:</label>
+            <input type="text" id="soil-type" name="soil-type" required>
+
+            <label for="experience" data-translate-key="experience">Experience:</label>
+            <input type="number" id="experience" name="experience" required>
+
+            <label for="bank-ifsc" data-translate-key="bank-ifsc">Bank IFSC Code:</label>
+            <input type="text" id="bank-ifsc" name="bank-ifsc" required>
+
+            <label for="crop-history" data-translate-key="crop-history">Crop History:</label>
+            <input type="text" id="crop-history" name="crop-history" required>
+        </form>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="container">
+        <button onclick="generatePDF()" data-translate-key="submit-request">Submit Request</button>
+    </div>
+</div>
+
+<!-- Include jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
+
+<script>
+    const translations = {
+        en: {
+            'crop-form-title': 'Big Basket Crop Request Form',
+            'account-form-title': 'Account Details',
+            'location': 'Location',
+            'crop-type': 'Select Crop Type',
+            'quantity': 'Select Quantity',
+            'full-name': 'Full Name:',
+            'adhar-number': 'Aadhar Number:',
+            'contact-number': 'Contact Number:',
+            'account-location': 'Location:',
+            'ownership-status': 'Ownership Status:',
+            'soil-type': 'Soil Type / Number of Acres:',
+            'experience': 'Experience:',
+            'bank-ifsc': 'Bank IFSC Code:',
+            'crop-history': 'Crop History:',
+            'submit-request': 'Submit Request'
+        },
+        hi: {
+            'crop-form-title': 'बिग बास्केट फसल अनुरोध फॉर्म',
+            'account-form-title': 'खाता विवरण',
+            'location': 'स्थान',
+            'crop-type': 'फसल का प्रकार चुनें',
+            'quantity': 'मात्रा चुनें',
+            'full-name': 'पूरा नाम:',
+            'adhar-number': 'आधार नंबर:',
+            'contact-number': 'संपर्क नंबर:',
+            'account-location': 'स्थान:',
+            'ownership-status': 'स्वामित्व की स्थिति:',
+            'soil-type': 'मृदा प्रकार / एकड़ की संख्या:',
+            'experience': 'अनुभव:',
+            'bank-ifsc': 'बैंक IFSC कोड:',
+            'crop-history': 'फसल का इतिहास:',
+            'submit-request': 'अनुरोध सबमिट करें'
+        },
+        te: {
+            'crop-form-title': 'బిగ్ బాస్కెట్ పంట అభ్యర్థన ఫారం',
+            'account-form-title': 'ఖాతా వివరాలు',
+            'location': 'స్థానం',
+            'crop-type': 'పంట రకం ఎంచుకోండి',
+            'quantity': 'మొత్తం ఎంచుకోండి',
+            'full-name': 'పూర్తి పేరు:',
+            'adhar-number': 'ఆధార్ నెంబర్:',
+            'contact-number': 'సంప్రదింపు నెంబర్:',
+            'account-location': 'స్థానం:',
+            'ownership-status': 'స్వామ్య స్థితి:',
+            'soil-type': 'మట్టి రకం / ఎకరాల సంఖ్య:',
+            'experience': 'అనుభవం:',
+            'bank-ifsc': 'బ్యాంక్ IFSC కోడ్:',
+            'crop-history': 'పంట చరిత్ర:',
+            'submit-request': 'అభ్యర్థన సబ్మిట్ చేయండి'
+        }
+    };
+
+    function translatePage(lang) {
+        document.querySelectorAll('[data-translate-key]').forEach(element => {
+            const key = element.getAttribute('data-translate-key');
+            element.innerText = translations[lang][key] || key;
+        });
+        document.getElementById('crop-form-title').innerText = translations[lang]['crop-form-title'] || 'Big Basket Crop Request Form';
+        document.getElementById('account-form-title').innerText = translations[lang]['account-form-title'] || 'Account Details';
+    }
+
+    document.getElementById('language-selector').addEventListener('change', (event) => {
+        translatePage(event.target.value);
+    });
+
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Collect Crop Request Form Data
+        const location = document.getElementById('location').value;
+        const crop = document.getElementById('crop').value;
+        const quantity = document.getElementById('quantity').value;
+
+        // Collect Account Details Form Data
+        const fullName = document.getElementById('full-name').value;
+        const adharNumber = document.getElementById('adhar-number').value;
+        const contactNumber = document.getElementById('contact-number').value;
+        const accountLocation = document.getElementById('account-location').value;
+        const ownershipStatus = document.getElementById('ownership-status').value;
+        const soilType = document.getElementById('soil-type').value;
+        const experience = document.getElementById('experience').value;
+        const bankIfsc = document.getElementById('bank-ifsc').value;
+        const cropHistory = document.getElementById('crop-history').value;
+
+        // Add Crop Request data to the PDF
+        doc.text("Big Basket Crop Request Form", 10, 10);
+        doc.text(`Location: ${location}`, 10, 20);
+        doc.text(`Crop Type: ${crop}`, 10, 30);
+        doc.text(`Quantity: ${quantity}`, 10, 40);
+
+        // Add Account Details data to the PDF
+        doc.text("Account Details", 10, 60);
+        doc.text(`Full Name: ${fullName}`, 10, 70);
+        doc.text(`Aadhar Number: ${adharNumber}`, 10, 80);
+        doc.text(`Contact Number: ${contactNumber}`, 10, 90);
+        doc.text(`Location: ${accountLocation}`, 10, 100);
+        doc.text(`Ownership Status: ${ownershipStatus}`, 10, 110);
+        doc.text(`Soil Type: ${soilType}`, 10, 120);
+        doc.text(`Experience: ${experience}`, 10, 130);
+        doc.text(`Bank IFSC Code: ${bankIfsc}`, 10, 140);
+        doc.text(`Crop History: ${cropHistory}`, 10, 150);
+
+        // Save the PDF
+        doc.save('Big-Basket-Request-Account-Details.pdf');
+    }
+</script>
+
+</body>
+</html>
